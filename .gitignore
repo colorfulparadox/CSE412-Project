@@ -1,3 +1,4 @@
 database/postgres_data
 database/.venv
 backend/.venv
+backend/src/__pycache__
