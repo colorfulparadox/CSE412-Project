@@ -10,7 +10,7 @@ Once installed run Docker and execute ./setup.sh
 When you run ./setup.sh the DB will run till you turn it off. 
 You can turn the DB off in the Docker app. You can also run the container from the app as well. 
 
-###### Setting up database python dev environment
+#### Setting up database python dev environment
 Sometimes VS Code fails to select the correct interpreter for the
 Python environment. If this occurs and you are on Mac do this:
 - cmd-shift-p
