@@ -2,6 +2,13 @@
 
 # only run this script once
 
+
+if [ -d "./postgres_data" ]; then
+    echo "script was ran before. run clean up script"
+    exit 1
+fi
+
+
 mkdir postgres_data
 
 echo " ### Building and Running Docker ###"
