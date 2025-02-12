@@ -1,1 +1,3 @@
 database/postgres_data
+database/.venv
+backend/.venv
