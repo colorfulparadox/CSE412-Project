@@ -14,7 +14,7 @@ try:
     
     username = "admin"
     password = "password".encode('utf-8')
-    hash_password = bcrypt.hashpw(password, bcrypt.gensalt())
+    hash_password = bcrypt.hashpw(password, bcrypt.gensalt(16))
     email = "heewook.lee@asu.edu"
 
     cur.execute("""
