@@ -6,10 +6,9 @@ services:
     environment:
       POSTGRES_PASSWORD: password
       POSTGRES_USER: postgres
-      POSTGRES_DB: asu412_db_project
+      #POSTGRES_DB: asu412_db_project
     ports:
       - "5430:5432"
     volumes:
       - ./postgres_data:/var/lib/postgresql/data 
       - ./init.sql:/docker-entrypoint-initdb.d/init.sql
-      - ./database:/docker-entrypoint-initdb.d
