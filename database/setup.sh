@@ -21,4 +21,4 @@ mkdir .venv
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r python_requirements.txt
-python3 create_users.py
+python3 load_data.py

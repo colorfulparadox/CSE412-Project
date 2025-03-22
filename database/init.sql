@@ -8,7 +8,7 @@ CREATE TABLE trainer (
     uid CHAR(10) PRIMARY KEY,
     name VARCHAR(32) NOT NULL,
     blurb TEXT,
-    password VARCHAR(32) NOT NULL
+    password BYTEA NOT NULL
 );
 
 CREATE TABLE pokemon (
