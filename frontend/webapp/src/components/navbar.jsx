@@ -11,7 +11,7 @@ function Logout(event, navigate){
 
 export default function NavBar() {
 
-  const [user, setAdminData] = useState(null);
+//   const [user, setAdminData] = useState(null);
 
     const onSubmit = (event) => {
         Logout(event, navigate)
