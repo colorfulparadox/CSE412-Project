@@ -15,6 +15,20 @@ def root(path):
 
     return send_from_directory(app.static_folder, "index.html")
 
+
+@app.route("/login", methods=["POST"])
+def login():
+    user_cookie = request.cookies.get('user_token')
+
+    if user_cookie:
+        return redirect(url_for('UserProfile'))
+
+    auth_token = "authtokenadmin"
+    response = jsonify({"message": "No cookie found. AuthToken issued.", "auth_token": auth_token})
+    response.set_cookie('user_token', auth_token, max_age=60 * 60 * 24 * 30)
+
+    return response
+
 '''
 @app.route("/user/auth", methods=["GET"])
 def auth_user():
