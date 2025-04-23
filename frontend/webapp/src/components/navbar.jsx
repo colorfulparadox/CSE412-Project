@@ -20,7 +20,7 @@ export default function NavBar() {
     return (
         <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="Home">Title</Navbar.Brand>
+          <Navbar.Brand href="/">Title</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Nav className="me-auto">
             <Nav.Link href="/">navlink</Nav.Link>
