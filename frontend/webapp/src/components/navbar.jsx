@@ -20,13 +20,12 @@ export default function NavBar() {
     return (
         <Navbar bg="dark" data-bs-theme="dark">
         <Container>
-          <Navbar.Brand href="/">Title</Navbar.Brand>
+          <Navbar.Brand href="/">Pokémon Search</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Nav className="me-auto">
-            <Nav.Link href="/">navlink</Nav.Link>
-            <Nav.Link href="/">navlink</Nav.Link>
-            <Nav.Link href="/">navlink</Nav.Link>
-            <Nav.Link href="/">navlink</Nav.Link>
+            <Nav.Link href="/">Collection Management</Nav.Link>
+            <Nav.Link href="/">State Comparison</Nav.Link>
+            <Nav.Link href="/">Search & Filter</Nav.Link>
           </Nav>
           <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
           <Button className="" variant="outline-danger" type="submit" onClick={onSubmit}>Logout</Button>
