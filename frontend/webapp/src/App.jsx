@@ -14,7 +14,7 @@ function App() {
   else if ((path.startsWith("/login"))) {
     return <Login/>
   }
-  else if ((path.startsWith("/UserProfile"))) {
+  else if ((path.startsWith("/userprofile"))) {
     return <UserProfile/>
   }
   else {

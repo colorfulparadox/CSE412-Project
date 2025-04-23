@@ -13,21 +13,33 @@ def root(path):
     if path != "" and os.path.exists(file_path):
         return send_from_directory(app.static_folder, path)
 
+    auth_cookie = request.cookies.get("auth_token")
+
+    if not auth_cookie:
+        if request.path not in ["/", "/login"]:
+            return redirect("/")
+    else:
+        if request.path == "/login":
+            return redirect("/userprofile")
+
     return send_from_directory(app.static_folder, "index.html")
 
 
 @app.route("/login", methods=["POST"])
 def login():
-    user_cookie = request.cookies.get('user_token')
+    username = request.form.get("username")
+    password = request.form.get("password")
+    print(request.form)
 
-    if user_cookie:
-        return redirect(url_for('UserProfile'))
-
-    auth_token = "authtokenadmin"
-    response = jsonify({"message": "No cookie found. AuthToken issued.", "auth_token": auth_token})
-    response.set_cookie('user_token', auth_token, max_age=60 * 60 * 24 * 30)
-
-    return response
+    if username == "bob" and password == "test":
+        print("logging user in")
+        auth_token = "authtokenadmin"
+        response = make_response(redirect("userprofile"))
+        response.set_cookie('auth_token', auth_token, max_age=60 * 60 * 24 * 30)
+        return response
+    else:
+        print("failed to login")
+        return redirect("login")
 
 '''
 @app.route("/user/auth", methods=["GET"])
