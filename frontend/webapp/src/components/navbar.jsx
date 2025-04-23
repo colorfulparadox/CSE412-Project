@@ -24,7 +24,7 @@ export default function NavBar() {
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Nav className="me-auto">
             <Nav.Link href="/">Collection Management</Nav.Link>
-            <Nav.Link href="/">State Comparison</Nav.Link>
+            <Nav.Link href="/">Stat Comparison</Nav.Link>
             <Nav.Link href="/">Search & Filter</Nav.Link>
           </Nav>
           <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
