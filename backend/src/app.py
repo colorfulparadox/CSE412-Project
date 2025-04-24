@@ -6,7 +6,7 @@ app = Flask(__name__, static_folder="../../frontend/webapp/dist", static_url_pat
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
 
 @app.route("/", defaults={"path": ""})
-@app.route("/<path:path>")
+@app.route("/<path:path>", methods=["GET"])
 def root(path):
     file_path = os.path.join(app.static_folder, path)
 
@@ -34,12 +34,13 @@ def login():
     if username == "bob" and password == "test":
         print("logging user in")
         auth_token = "authtokenadmin"
-        response = make_response(redirect("userprofile"))
+
+        response = make_response({"message": "Login successful", "status": "success"})
         response.set_cookie('auth_token', auth_token, max_age=60 * 60 * 24 * 30)
-        return response
+        return response, 200
     else:
         print("failed to login")
-        return redirect("login")
+        return {"message": "Invalid username or password", "status": "error"}, 401
 
 '''
 @app.route("/user/auth", methods=["GET"])
