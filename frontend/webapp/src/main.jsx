@@ -6,7 +6,8 @@ import App from './App.jsx'
 import 'bootstrap/dist/css/bootstrap.css';
 
 createRoot(document.getElementById('root')).render(
-  <StrictMode>
+  // StrictMode renders things twice, running onload stuff twice as well
+  // <StrictMode>
     <App />
-  </StrictMode>,
+  // </StrictMode>,
 )

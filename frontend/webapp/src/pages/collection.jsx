@@ -1,5 +1,7 @@
 import NavBar from '../components/navbar'; 
 import { Button, Col, Container, Form, Navbar, Table } from 'react-bootstrap';
+import { useEffect, useState, useRef } from 'react';
+
 
 function load_collection() {
     console.log("loading");
@@ -14,6 +16,13 @@ function remove() {
 }
 
 export default function Collection() {
+
+    // do something on component mount
+    useEffect(() => {
+        load_collection()
+
+    }, []);
+
     const handleClick = (event) => {
         event.preventDefault();
 
@@ -37,7 +46,8 @@ export default function Collection() {
         <>
         <NavBar/>
         <Container>
-            <p>todo: search & filter</p>
+            <h1>Pokémon Collection (Pokédex)</h1>
+            <p>View your Pokédex, add or remove Pokémon, search and filter.</p>
             <Form>
                 <Form.Group>
                     <Form.Control type="text" name="searchinput" id="searchinput" placeholder='Enter a Pokémon name or Pokédex ID'></Form.Control>
