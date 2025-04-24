@@ -23,9 +23,9 @@ export default function NavBar() {
           <Navbar.Brand href="/">Pokémon Search</Navbar.Brand>
           <Navbar.Toggle aria-controls="basic-navbar-nav" />
           <Nav className="me-auto">
-            <Nav.Link href="/">Collection Management</Nav.Link>
+            <Nav.Link href="/collection">Collection</Nav.Link>
             <Nav.Link href="/">Stat Comparison</Nav.Link>
-            <Nav.Link href="/">Search & Filter</Nav.Link>
+            <Nav.Link href="/userprofile">Profile</Nav.Link>
           </Nav>
           <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
           <Button className="" variant="outline-danger" type="submit" onClick={onSubmit}>Logout</Button>
