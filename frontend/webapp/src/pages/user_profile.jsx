@@ -66,7 +66,7 @@ export default function Profile() {
             <Container>
                 <Row>
                     <Col style={{ padding: '20px' }}>
-                        <h1>User Profile</h1>
+                        <h1>Trainer Profile</h1>
                         <Form.Group>
                             <Form.Label htmlFor="inputUsername">Username</Form.Label>
                             <Form.Control 
