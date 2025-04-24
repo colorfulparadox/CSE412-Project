@@ -6,6 +6,7 @@ import Login from './pages/login.jsx';
 import Page404 from './pages/404.jsx';
 import UserProfile from './pages/user_profile.jsx';
 import Collection from './pages/collection.jsx';
+import StatCompare from './pages/statcompare.jsx';
 
 function App() {
   const path = window.location.pathname
@@ -17,6 +18,9 @@ function App() {
   }
   else if ((path.startsWith("/userprofile"))) {
     return <UserProfile/>
+  }
+  else if ((path.startsWith("/statcompare"))) {
+    return <StatCompare/>
   }
   else if ((path.startsWith("/collection"))) {
     return <Collection/>

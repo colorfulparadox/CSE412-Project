@@ -1,5 +1,5 @@
 import NavBar from '../components/navbar'; 
-import { Button, Col, Container, Navbar, Table } from 'react-bootstrap';
+import { Button, Col, Container, Form, Navbar, Table } from 'react-bootstrap';
 
 function load_collection() {
     console.log("loading");
@@ -26,12 +26,27 @@ export default function Collection() {
                 break;
         }
     }
+
+    const handleSubmit = (event) => {
+        event.preventDefault();
+
+        console.log("submitting")
+    }
     
     return (
         <>
         <NavBar/>
         <Container>
             <p>todo: search & filter</p>
+            <Form>
+                <Form.Group>
+                    <Form.Control type="text" name="searchinput" id="searchinput" placeholder='Enter a Pokémon name or Pokédex ID'></Form.Control>
+                    <Button type="submit" 
+                        className="mb-3"
+                        onClick={handleSubmit}
+                        >Search</Button>
+                </Form.Group>
+            </Form>
             <Button onClick={handleClick} name="add">Add a new Pokémon</Button>
             <Button onClick={handleClick} name="remove">Remove a Pokémon</Button>
             <Table striped bordered hover /*size='sm'*/>
@@ -41,10 +56,12 @@ export default function Collection() {
                         <th colSpan={2}>Pokémon</th>
                     </tr>
                 </thead>
-                <tr>
-                    <td>1</td>
-                    <td>Pikachu</td>
-                </tr>
+                <tbody>
+                    <tr>
+                        <td>1</td>
+                        <td>Pikachu</td>
+                    </tr>
+                </tbody>
             </Table>
         </Container>
         </>
