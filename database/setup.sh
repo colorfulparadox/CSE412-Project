@@ -15,7 +15,9 @@ echo " ### Building and Running Docker ###"
 docker-compose up --detach
 
 
-sleep 1
+sleep 3
+
+echo " ### Inserting Test Data! ###"
 
 mkdir .venv
 python3 -m venv .venv

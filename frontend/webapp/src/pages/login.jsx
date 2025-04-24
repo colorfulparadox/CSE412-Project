@@ -110,7 +110,7 @@ export default function Login() {
                     value={password}
                     onChange={(e) => setPassword(e.target.value)}
                     />
-                    <Button className="LoginButton" variant="primary" type="submit">Login</Button>{' '}
+                    <Button className="LoginButton" variant="primary" type="submit">Sign Up</Button>{' '}
                 </Form.Group>
             </Form>
         </Container>

@@ -1,9 +1,24 @@
+import psycopg2.pool
 from flask import Flask, send_from_directory, jsonify, request, redirect, url_for, make_response
 from flask_cors import CORS
 import os
 
+
+from user import login_user, LoginResult
+
 app = Flask(__name__, static_folder="../../frontend/webapp/dist", static_url_path=None)
 CORS(app, origins="http://localhost:3000", supports_credentials=True)
+
+
+db_pool = psycopg2.pool.ThreadedConnectionPool(
+    minconn=1,
+    maxconn=20,
+    dbname="postgres",
+    user="postgres",
+    password="password",
+    host="localhost",
+    port="5430"
+)
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>", methods=["GET"])
@@ -29,17 +44,17 @@ def root(path):
 def login():
     username = request.form.get("username")
     password = request.form.get("password")
-    print(request.form)
+    #print(request.form)
 
-    if username == "bob" and password == "test":
-        print("logging user in")
-        auth_token = "authtokenadmin"
+    result, auth_token = login_user(db_pool, username, password)
 
+    if result == LoginResult.SUCCESS:
         response = make_response({"message": "Login successful", "status": "success"})
         response.set_cookie('auth_token', auth_token, max_age=60 * 60 * 24 * 30)
         return response, 200
     else:
-        print("failed to login")
+        if result == LoginResult.DB_ERROR:
+            print(auth_token)
         return {"message": "Invalid username or password", "status": "error"}, 401
 
 '''
