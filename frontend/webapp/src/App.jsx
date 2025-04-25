@@ -6,6 +6,7 @@ import Login from './pages/login.jsx';
 import Page404 from './pages/404.jsx';
 import UserProfile from './pages/user_profile.jsx';
 import Collection from './pages/collection.jsx';
+import Pokedex from './pages/globalpokedex.jsx';
 import StatCompare from './pages/statcompare.jsx';
 
 function App() {
@@ -24,6 +25,9 @@ function App() {
   }
   else if ((path.startsWith("/collection"))) {
     return <Collection/>
+  }
+  else if ((path.startsWith("/pokedex"))) {
+    return <Pokedex/>
   }
   else {
     return <Page404/>

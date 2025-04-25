@@ -141,7 +141,7 @@ def get_pokedex():
 
 @app.route("/pokedex/add/<pokedexid>", methods=["GET"])
 def add_pokemon(pokedexid):
-    uid = 1
+    uid = '1'
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
@@ -165,7 +165,7 @@ def add_pokemon(pokedexid):
 
 @app.route("/pokedex/remove/<pokedexid>", methods=["GET"])
 def remove_pokemon(pokedexid):
-    uid = 1
+    uid = '1'
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
@@ -187,9 +187,35 @@ def remove_pokemon(pokedexid):
                     """, (uid, pokedexid,))
         return jsonify(response="good")
 
-@app.route("/pokedex/filtered", methods=["POST"])
-def get_filtered_pokedex():
-    return make_response("filtered")
+@app.route("/pokedex/<pokedexid>", methods=["GET"])
+def get_filtered_pokedex(pokedexid):
+    uid = '1'
+    
+    try:
+        pokedexid = int(pokedexid)
+        # use pokedex id
+        resp = run_query("""
+                        SELECT * 
+                        FROM pokemon 
+                        WHERE pokedex_num IN (
+                            SELECT pokedex_num 
+                            FROM pokedex 
+                            WHERE uid = %s) AND pokedex_num = %s;
+                    """, (uid, pokedexid,))
+
+        return make_response(resp)
+
+    except ValueError:
+        resp = run_query("""
+                        SELECT * 
+                        FROM pokemon 
+                        WHERE pokedex_num IN (
+                            SELECT pokedex_num 
+                            FROM pokedex 
+                            WHERE uid = %s) AND LOWER(name) = LOWER(%s);
+                    """, (uid, pokedexid,))
+
+    return make_response(resp)
 
 
 if __name__ == "__main__":

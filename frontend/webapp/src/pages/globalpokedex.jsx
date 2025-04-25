@@ -3,27 +3,16 @@ import { Button, Col, Container, Form, Navbar, Table } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
 
-async function add(pokedexid) {
-    console.log("add");
-    const resp = await pokeapi("/pokedex/add/" + pokedexid)
-}
 
-
-async function remove(pokedexid) {
-    console.log("remove");
-    const resp = await pokeapi("/pokedex/remove/" + pokedexid)
-
-}
-
-export default function Collection() {
+export default function GlobalPokedex() {
     const [pokemonList, setPokemonList] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchInput, setSearchInput] = useState("");
   
-    async function load_collection() {
+    async function load_pokedex() {
         try {
-            const data = await pokeapi("/pokedex");
+            const data = await pokeapi("/pokemon");
             console.log("DATA:", data);
             setPokemonList(data);
         } catch (err) {
@@ -36,7 +25,7 @@ export default function Collection() {
 
     async function load_search(term) {
         try {
-            const data = await pokeapi("/pokedex/" + term);
+            const data = await pokeapi("/pokemon/" + term);
             console.log("DATA:", data);
             setPokemonList(data);
         } catch (err) {
@@ -60,32 +49,13 @@ export default function Collection() {
 
     // do something on component mount
     useEffect(() => {
-        load_collection()
+        load_pokedex()
       }, []);
-
-    const handleClick = async (event) => {
-        event.preventDefault();
-
-        let send = searchInput.toLowerCase()
-        switch (event.target.name) {
-            case 'add':
-                console.log(send);
-                await add(send);
-                load_collection();
-                break;
-            case 'remove':
-                console.log(send);
-                await remove(send);
-                load_collection();
-                break;
-        }
-    }
 
     const handleSubmit = (event) => {
         event.preventDefault();
 
         if (searchInput == '' || searchInput == ' ') {
-            load_collection();
             return;
         }
 
@@ -99,8 +69,8 @@ export default function Collection() {
         <>
         <NavBar/>
         <Container>
-            <h1>Pokémon Collection (Pokédex)</h1>
-            <p>View your Pokédex, search, add, or remove Pokémon.</p>
+            <h1>All Pokémon (Pokédex)</h1>
+            <p>View the global Pokédex and search for Pokémon.</p>
             <Form>
                 <Form.Group>
                     <Form.Control type="text" name="searchinput" id="searchinput" value={searchInput} onChange={handleChange} placeholder='Enter a Pokémon name or Pokédex ID'></Form.Control>
@@ -110,8 +80,6 @@ export default function Collection() {
                         >Search</Button>
                 </Form.Group>
             </Form>
-            <Button onClick={handleClick} name="add">Add a new Pokémon</Button>
-            <Button onClick={handleClick} name="remove">Remove a Pokémon</Button>
             <Table striped bordered hover>
                 <thead>
                     <tr>

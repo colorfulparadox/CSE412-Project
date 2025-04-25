@@ -25,6 +25,7 @@ export default function NavBar() {
           <Nav className="me-auto">
             <Nav.Link href="/collection">Collection</Nav.Link>
             <Nav.Link href="/statcompare">Stat Comparison</Nav.Link>
+            <Nav.Link href="/pokedex">Pokedex</Nav.Link>
             <Nav.Link href="/userprofile">Profile</Nav.Link>
           </Nav>
           <Navbar.Collapse id="basic-navbar-nav"></Navbar.Collapse>
