@@ -1,4 +1,6 @@
+from urllib import response
 import psycopg2.pool
+import psycopg2.extras
 from flask import Flask, send_from_directory, jsonify, request, redirect, url_for, make_response
 from flask_cors import CORS
 import os
@@ -7,7 +9,7 @@ import os
 from user import login_user, LoginResult
 
 app = Flask(__name__, static_folder="../../frontend/webapp/dist", static_url_path=None)
-CORS(app, origins="http://localhost:3000", supports_credentials=True)
+CORS(app, origins="http://localhost:5173", supports_credentials=True)
 
 
 db_pool = psycopg2.pool.ThreadedConnectionPool(
@@ -19,6 +21,29 @@ db_pool = psycopg2.pool.ThreadedConnectionPool(
     host="localhost",
     port="5430"
 )
+
+def run_query(query, args=None):
+    conn = None
+    try:
+        conn = db_pool.getconn()
+        cur = conn.cursor(cursor_factory=psycopg2.extras.RealDictCursor)
+
+        cur.execute(query, args)
+
+        # Only fetch results if it's a SELECT query
+        if query.strip().lower().startswith("select"):
+            result = cur.fetchall()
+        else:
+            conn.commit()
+            result = None
+
+        cur.close()
+        return result
+
+    finally:
+        if conn:
+            db_pool.putconn(conn)
+
 
 @app.route("/", defaults={"path": ""})
 @app.route("/<path:path>", methods=["GET"])
@@ -78,6 +103,93 @@ def login_user():
 def create_user():
     pass
 '''
+
+@app.route("/pokemon/<pokedexid>", methods=["GET"])
+def get_pokemon(pokedexid):
+    # I could just also do another endpoint for accessing by 
+    # pokemon name, and having the logic in the website.
+    # This is kinda slick though.
+    try:
+        pokedexid = int(pokedexid)
+        # use pokedex id
+        resp = run_query("SELECT * FROM pokemon WHERE pokedex_num = %s;", (pokedexid,))
+        return make_response(resp)
+
+    except ValueError:
+        # use pokemon name
+        resp = run_query("SELECT * FROM pokemon WHERE LOWER(name) LIKE %s;", (pokedexid,))
+        print(pokedexid, resp)
+        return make_response(resp)
+
+@app.route("/pokemon", methods=["GET"])
+def get_all_pokemon():
+    resp = run_query("SELECT * FROM pokemon")
+    return make_response(resp)
+
+@app.route("/pokedex", methods=["GET"])
+def get_pokedex():
+    
+    resp = run_query("""
+                     SELECT * 
+                     FROM pokemon 
+                     WHERE pokedex_num IN (
+                        SELECT pokedex_num 
+                        FROM pokedex 
+                        WHERE uid = %s);
+                     """, ('1',))
+    return make_response(resp)
+
+@app.route("/pokedex/add/<pokedexid>", methods=["GET"])
+def add_pokemon(pokedexid):
+    try:
+        pokedexid = int(pokedexid)
+        # use pokedex id
+        run_query("""
+                    INSERT INTO pokedex (uid, pokedex_num)
+                    VALUES ('1', %s)
+                    ON CONFLICT (uid, pokedex_num) DO NOTHING;
+                    """, (pokedexid,))
+        return jsonify(response="good")
+
+    except ValueError:
+        # use pokemon name
+        run_query("""
+                    INSERT INTO pokedex (uid, pokedex_num)
+                    SELECT '1', pokedex_num
+                    FROM pokemon
+                    WHERE LOWER(name) = LOWER(%s)
+                    ON CONFLICT (uid, pokedex_num) DO NOTHING;
+                        """, (pokedexid,))
+        return jsonify(response="good")
+
+@app.route("/pokedex/remove/<pokedexid>", methods=["GET"])
+def remove_pokemon(pokedexid):
+    try:
+        pokedexid = int(pokedexid)
+        # use pokedex id
+        run_query("""
+                    DELETE FROM pokedex
+                    WHERE uid = '1'
+                    AND pokedex_num = %s
+                    """, (pokedexid,))
+        return jsonify(response="good")
+
+    except ValueError:
+        # use pokemon name
+        run_query("""
+                    DELETE FROM pokedex
+                    WHERE uid = '1'
+                    AND pokedex_num = (
+                    SELECT pokedex_num FROM pokemon WHERE LOWER(name) = LOWER(%s)
+                    );
+                    """, (pokedexid,))
+        print(pokedexid, resp)
+        return jsonify(response="good")
+
+@app.route("/pokedex/filtered", methods=["POST"])
+def get_filtered_pokedex():
+    return make_response("filtered")
+
 
 if __name__ == "__main__":
     app.run(debug=True, port=5454)
