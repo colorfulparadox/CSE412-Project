@@ -110,8 +110,8 @@ export default function Collection() {
                         >Search</Button>
                 </Form.Group>
             </Form>
-            <Button onClick={handleClick} name="add">Add a new Pokémon</Button>
-            <Button onClick={handleClick} name="remove">Remove a Pokémon</Button>
+            <Button onClick={handleClick} name="add">Add new Pokémon</Button>
+            <Button onClick={handleClick} name="remove">Remove Pokémon</Button>
             <Table striped bordered hover>
                 <thead>
                     <tr>
