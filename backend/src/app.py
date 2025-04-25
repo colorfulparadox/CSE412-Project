@@ -141,49 +141,50 @@ def get_pokedex():
 
 @app.route("/pokedex/add/<pokedexid>", methods=["GET"])
 def add_pokemon(pokedexid):
+    uid = 1
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
         run_query("""
                     INSERT INTO pokedex (uid, pokedex_num)
-                    VALUES ('1', %s)
+                    VALUES (%s, %s)
                     ON CONFLICT (uid, pokedex_num) DO NOTHING;
-                    """, (pokedexid,))
+                    """, (uid, pokedexid,))
         return jsonify(response="good")
 
     except ValueError:
         # use pokemon name
         run_query("""
                     INSERT INTO pokedex (uid, pokedex_num)
-                    SELECT '1', pokedex_num
+                    SELECT %s, pokedex_num
                     FROM pokemon
                     WHERE LOWER(name) = LOWER(%s)
                     ON CONFLICT (uid, pokedex_num) DO NOTHING;
-                        """, (pokedexid,))
+                        """, (uid, pokedexid,))
         return jsonify(response="good")
 
 @app.route("/pokedex/remove/<pokedexid>", methods=["GET"])
 def remove_pokemon(pokedexid):
+    uid = 1
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
         run_query("""
                     DELETE FROM pokedex
-                    WHERE uid = '1'
+                    WHERE uid = %s
                     AND pokedex_num = %s
-                    """, (pokedexid,))
+                    """, (uid, pokedexid,))
         return jsonify(response="good")
 
     except ValueError:
         # use pokemon name
         run_query("""
                     DELETE FROM pokedex
-                    WHERE uid = '1'
+                    WHERE uid = %s
                     AND pokedex_num = (
                     SELECT pokedex_num FROM pokemon WHERE LOWER(name) = LOWER(%s)
                     );
-                    """, (pokedexid,))
-        print(pokedexid, resp)
+                    """, (uid, pokedexid,))
         return jsonify(response="good")
 
 @app.route("/pokedex/filtered", methods=["POST"])
