@@ -99,7 +99,7 @@ export default function Collection() {
         <>
         <NavBar/>
         <Container>
-            <h1>Pokémon Collection (Pokédex)</h1>
+            <h1>Pokémon Collection (Trainer Pokédex)</h1>
             <p>View your Pokédex, search, add, or remove Pokémon.</p>
             <Form>
                 <Form.Group>

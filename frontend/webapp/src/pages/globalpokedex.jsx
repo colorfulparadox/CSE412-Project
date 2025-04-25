@@ -69,7 +69,7 @@ export default function GlobalPokedex() {
         <>
         <NavBar/>
         <Container>
-            <h1>All Pokémon (Pokédex)</h1>
+            <h1>All Pokémon (Global Pokédex)</h1>
             <p>View the global Pokédex and search for Pokémon.</p>
             <Form>
                 <Form.Group>
