@@ -28,8 +28,6 @@ export default function Profile() {
 
         pokepostrequest("/profile/set/1", {"test": 0});
 
-        // update
-
     }
 
     const pwupdate_submit = (event) => {
@@ -41,6 +39,8 @@ export default function Profile() {
             console.log("Don't submit an empty password");
             return;
         }
+
+        pokepostrequest("/profile/set/1", {"password": pw});
 
     }
 
