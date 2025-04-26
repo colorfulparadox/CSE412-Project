@@ -1,6 +1,8 @@
 import NavBar from '../components/navbar'; 
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
+import { pokepostrequest } from '../api/pokemonapi';
+
 
 // fields should populate on load
 
@@ -24,6 +26,8 @@ export default function Profile() {
             return;
         }
 
+        pokepostrequest("/profile/set/1", {"test": 0});
+
         // update
 
     }
@@ -44,17 +48,14 @@ export default function Profile() {
         event.preventDefault();
     
         switch (event.target.name) {
-            case 'user':
+            case 'username':
                 setUsername(event.target.value);
-                userData[event.target.name] = event.target.value;
                 break;
             case 'name':
                 setName(event.target.value);
-                userData[event.target.name] = event.target.value;
                 break;
             case 'blurb':
                 setBlurb(event.target.value);
-                userData[event.target.name] = event.target.value;
                 break;
         }
     

@@ -217,6 +217,19 @@ def get_filtered_pokedex(pokedexid):
 
     return make_response(resp)
 
+@app.route("/profile/<authid>", methods=["GET"])
+def get_profile_data(authid):
+    resp = run_query("""
+        SELECT uid, username, name, blurb
+        FROM trainer
+        WHERE uid = %s
+    """, (authid,))
+    return make_response(resp)
+
+@app.route('/profile/set/<authid>', methods=["POST"])
+def set_profile_data(authid):
+    print(request.get_json())
+    return make_response(jsonify("good"))
 
 if __name__ == "__main__":
     app.run(debug=True, port=5454)
