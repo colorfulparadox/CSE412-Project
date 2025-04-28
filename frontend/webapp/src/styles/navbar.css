@@ -1,0 +1,26 @@
+.custom-navbar {
+    background-color: #a8d0f0;
+    padding: 10px 30px;
+}
+
+.nav-links .nav-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: black !important;
+    margin-right: 20px;
+    font-size: 1.1rem;
+}
+
+.logout-button {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    border: 2px solid #4f6d7a;
+    color: #4f6d7a;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.logout-button:hover {
+    background-color: #4f6d7a;
+    color: white;
+}
