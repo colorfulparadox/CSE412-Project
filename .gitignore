@@ -10,6 +10,9 @@ backend/.idea/vcs.xml
 .DS_store
 .DS_Store
 
+# Next.js build
+.next/
+
 # Node.js
 node_modules/
 npm-debug.log
