@@ -240,6 +240,25 @@ def get_profile_data():
 @app.route('/profile/set', methods=["POST"])
 def set_profile_data():
     authid = request.cookies.get('auth_token')
+    newdata = request.get_json()
+
+    username = newdata.get('username', '')
+    name = newdata.get('name', '')
+    blurb = newdata.get('blurb', '')
+
+    resp = run_query("""
+        UPDATE trainer
+        SET username = %s,
+            name = %s,
+            blurb = %s
+        WHERE auth_token = %s;
+    """, (username, name, blurb, authid, ))
+    
+    return make_response(jsonify("good"))
+
+@app.route('/profile/setpw', methods=["POST"])
+def set_profile_password():
+    authid = request.cookies.get('auth_token')
 
     print(request.get_json())
     return make_response(jsonify("good"))

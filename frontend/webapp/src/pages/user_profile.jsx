@@ -37,7 +37,13 @@ export default function Profile() {
             return;
         }
 
-        pokepostrequest("/profile/set/1", {"test": 0});
+        let updatedata = {
+            "name": name,
+            "username": username,
+            "blurb": blurb,
+        };
+
+        pokepostrequest("/profile/set", updatedata);
 
     }
 
@@ -51,7 +57,7 @@ export default function Profile() {
             return;
         }
 
-        pokepostrequest("/profile/set/1", {"password": pw});
+        pokepostrequest("/profile/setpw", {"password": pw});
 
     }
 

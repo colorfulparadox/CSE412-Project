@@ -15,7 +15,7 @@ export async function pokeapi(path) {
 export function pokepostrequest(path, userdatadict) {
     let authid = 0;
 
-    return fetch(API_BASE + path, {
+    return fetch(`${API_BASE}${path}`, {
         method: "POST",
         headers: {
             "Content-Type": "application/json",
