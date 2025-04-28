@@ -10,17 +10,20 @@ backend/.idea/vcs.xml
 .DS_store
 .DS_Store
 
-# Next.js build
-.next/
+.idea/
+.vscode/
 
-# Node.js
-node_modules/
+# Node.js dependencies
+frontend/cse412-project-webapp/node_modules/
+
+# Build outputs
+frontend/cse412-project-webapp/.next/
+frontend/cse412-project-webapp/out/
+frontend/cse412-project-webapp/build/
+frontend/cse412-project-webapp/dist/
+
+# npm/yarn/pnpm debug logs
 npm-debug.log
 yarn-debug.log
 yarn-error.log
-
-# Build output
-dist/
-build/
-.next/
-.out/
+pnpm-debug.log
