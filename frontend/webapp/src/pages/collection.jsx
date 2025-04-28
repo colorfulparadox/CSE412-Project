@@ -3,15 +3,18 @@ import { Button, Col, Container, Form, Navbar, Table } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
 
+// static authid for testing
+let authid = "9c9c1583-1964-431c-b18f-b48cb4118f68"; // why not
+
 async function add(pokedexid) {
     console.log("add");
-    const resp = await pokeapi("/pokedex/add/" + pokedexid)
+    const resp = await pokeapi(`/pokedex/add/${pokedexid}/${authid}`)
 }
 
 
 async function remove(pokedexid) {
     console.log("remove");
-    const resp = await pokeapi("/pokedex/remove/" + pokedexid)
+    const resp = await pokeapi(`/pokedex/remove/${pokedexid}/${authid}`)
 
 }
 
@@ -23,7 +26,7 @@ export default function Collection() {
   
     async function load_collection() {
         try {
-            const data = await pokeapi("/pokedex");
+            const data = await pokeapi(`/pokedex/${authid}`);
             console.log("DATA:", data);
             setPokemonList(data);
         } catch (err) {
@@ -36,7 +39,7 @@ export default function Collection() {
 
     async function load_search(term) {
         try {
-            const data = await pokeapi("/pokedex/" + term);
+            const data = await pokeapi(`/pokedex/${term}/${authid}`);
             console.log("DATA:", data);
             setPokemonList(data);
         } catch (err) {

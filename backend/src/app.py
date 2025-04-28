@@ -126,8 +126,8 @@ def get_all_pokemon():
     resp = run_query("SELECT * FROM pokemon")
     return make_response(resp)
 
-@app.route("/pokedex", methods=["GET"])
-def get_pokedex():
+@app.route("/pokedex/<authid>", methods=["GET"])
+def get_pokedex(authid):
     
     resp = run_query("""
                      SELECT * 
@@ -135,60 +135,65 @@ def get_pokedex():
                      WHERE pokedex_num IN (
                         SELECT pokedex_num 
                         FROM pokedex 
-                        WHERE uid = %s);
-                     """, ('1',))
+                        WHERE uid IN (SELECT uid FROM trainer WHERE auth_token = %s));
+                     """, (authid,))
     return make_response(resp)
 
-@app.route("/pokedex/add/<pokedexid>", methods=["GET"])
-def add_pokemon(pokedexid):
+@app.route("/pokedex/add/<pokedexid>/<authid>", methods=["GET"])
+def add_pokemon(pokedexid, authid):
     uid = '1'
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
         run_query("""
-                    INSERT INTO pokedex (uid, pokedex_num)
-                    VALUES (%s, %s)
-                    ON CONFLICT (uid, pokedex_num) DO NOTHING;
-                    """, (uid, pokedexid,))
+            INSERT INTO pokedex (uid, pokedex_num)
+            VALUES (
+                (SELECT uid FROM trainer WHERE auth_token = %s),
+                %s
+            )
+            ON CONFLICT (uid, pokedex_num) DO NOTHING;
+        """, (authid, pokedexid,))
         return jsonify(response="good")
 
     except ValueError:
         # use pokemon name
         run_query("""
-                    INSERT INTO pokedex (uid, pokedex_num)
-                    SELECT %s, pokedex_num
-                    FROM pokemon
-                    WHERE LOWER(name) = LOWER(%s)
-                    ON CONFLICT (uid, pokedex_num) DO NOTHING;
-                        """, (uid, pokedexid,))
+            INSERT INTO pokedex (uid, pokedex_num)
+            SELECT 
+                (SELECT uid FROM trainer WHERE auth_token = %s),
+                pokedex_num
+            FROM pokemon
+            WHERE LOWER(name) = LOWER(%s)
+            ON CONFLICT (uid, pokedex_num) DO NOTHING;
+        """, (authid, pokedexid,))
         return jsonify(response="good")
 
-@app.route("/pokedex/remove/<pokedexid>", methods=["GET"])
-def remove_pokemon(pokedexid):
+@app.route("/pokedex/remove/<pokedexid>/<authid>", methods=["GET"])
+def remove_pokemon(pokedexid, authid):
     uid = '1'
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
         run_query("""
-                    DELETE FROM pokedex
-                    WHERE uid = %s
-                    AND pokedex_num = %s
-                    """, (uid, pokedexid,))
+            DELETE FROM pokedex
+            WHERE uid = (SELECT uid FROM trainer WHERE auth_token = %s)
+            AND pokedex_num = %s
+        """, (authid, pokedexid,))
         return jsonify(response="good")
 
     except ValueError:
         # use pokemon name
         run_query("""
                     DELETE FROM pokedex
-                    WHERE uid = %s
+                    WHERE uid = (SELECT uid FROM trainer WHERE auth_token = %s)
                     AND pokedex_num = (
                     SELECT pokedex_num FROM pokemon WHERE LOWER(name) = LOWER(%s)
                     );
-                    """, (uid, pokedexid,))
+                    """, (authid, pokedexid,))
         return jsonify(response="good")
 
-@app.route("/pokedex/<pokedexid>", methods=["GET"])
-def get_filtered_pokedex(pokedexid):
+@app.route("/pokedex/<pokedexid>/<authid>", methods=["GET"])
+def get_filtered_pokedex(pokedexid, authid):
     uid = '1'
     
     try:
@@ -200,8 +205,8 @@ def get_filtered_pokedex(pokedexid):
                         WHERE pokedex_num IN (
                             SELECT pokedex_num 
                             FROM pokedex 
-                            WHERE uid = %s) AND pokedex_num = %s;
-                    """, (uid, pokedexid,))
+                            WHERE uid = (SELECT uid FROM trainer WHERE auth_token = %s)) AND pokedex_num = %s;
+                    """, (authid, pokedexid,))
 
         return make_response(resp)
 
@@ -212,8 +217,8 @@ def get_filtered_pokedex(pokedexid):
                         WHERE pokedex_num IN (
                             SELECT pokedex_num 
                             FROM pokedex 
-                            WHERE uid = %s) AND LOWER(name) = LOWER(%s);
-                    """, (uid, pokedexid,))
+                            WHERE uid = (SELECT uid FROM trainer WHERE auth_token = %s)) AND LOWER(name) = LOWER(%s);
+                    """, (authid, pokedexid,))
 
     return make_response(resp)
 
@@ -222,7 +227,7 @@ def get_profile_data(authid):
     resp = run_query("""
         SELECT uid, username, name, blurb
         FROM trainer
-        WHERE uid = %s
+        WHERE auth_token = %s
     """, (authid,))
     return make_response(resp)
 

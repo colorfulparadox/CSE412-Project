@@ -38,7 +38,7 @@ export default function Login() {
             const result = await response.json()
       
             if (response.ok) {
-              window.location.href = "/userprofile"
+              window.location.href = "/"
             } else {
               setErrorMessage(result.message)
             }

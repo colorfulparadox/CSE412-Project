@@ -3,7 +3,6 @@ import { Button, Col, Container, Form, Navbar, Table } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
 
-
 export default function GlobalPokedex() {
     const [pokemonList, setPokemonList] = useState([]);
     const [loading, setLoading] = useState(true);
