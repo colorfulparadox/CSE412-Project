@@ -80,7 +80,7 @@ def login():
     else:
         if result == LoginResult.DB_ERROR:
             print(auth_token)
-        return {"message": "Invalid username or password", "status": "error"}, 401
+        return jsonify({"message": "Invalid username or password", "status": "error"}), 401
 
 '''
 @app.route("/user/auth", methods=["GET"])
