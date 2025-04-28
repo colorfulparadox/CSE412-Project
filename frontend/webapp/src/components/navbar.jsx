@@ -3,6 +3,7 @@ import Navbar from 'react-bootstrap/Navbar'
 import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import { useEffect, useState } from 'react';
+import { useLocation } from 'react-router-dom';
 import '../styles/navbar.css'; 
 
 async function handleLogout() {
@@ -18,6 +19,7 @@ async function handleLogout() {
 }
 
 export default function NavBar() {
+  const location = useLocation();
 
 //   const [user, setAdminData] = useState(null);
 
@@ -40,14 +42,14 @@ export default function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto nav-links">
-            <Nav.Link href="/collection">Collection</Nav.Link>
-            <Nav.Link href="/statcompare">Stat Comparison</Nav.Link>
-            <Nav.Link href="/pokedex">Pokédex</Nav.Link>
-            <Nav.Link href="/userprofile">Profile</Nav.Link>
+            <Nav.Link href="/collection" className={location.pathname === '/collection' ? 'active' : ''}>Collection</Nav.Link>
+            <Nav.Link href="/statcompare" className={location.pathname === '/statcompare' ? 'active' : ''}>Stat Comparison</Nav.Link>
+            <Nav.Link href="/pokedex" className={location.pathname === '/pokedex' ? 'active' : ''}>Pokédex</Nav.Link>
+            <Nav.Link href="/userprofile" className={location.pathname === '/userprofile' ? 'active' : ''}>Profile</Nav.Link>
           </Nav>
-          <Button className="logout-button" variant="outline-primary" onClick={onSubmit}>
+          <button className="logout-button" type="submit" onClick={onSubmit}>
             LOGOUT
-          </Button>
+          </button>
         </Navbar.Collapse>
       </Container>
     </Navbar>

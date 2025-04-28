@@ -24,3 +24,25 @@
     background-color: #f3c505;
     color: #0e2454;
 }
+
+.nav-links .nav-link {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    color: black !important;
+    margin-right: 20px;
+    font-size: 1.1rem;
+    position: relative;
+    transition: all 0.3s ease;
+}
+
+/* Hover effect */
+.nav-links .nav-link:hover {
+    color: #0e2454 !important; 
+    text-decoration: underline; 
+}
+
+/* Active page effect */
+.nav-links .active {
+    color: #0474b4 !important; 
+    text-decoration: underline;
+}
