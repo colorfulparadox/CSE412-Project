@@ -226,7 +226,7 @@ def get_filtered_pokedex(pokedexid, authid):
 
     return make_response(resp)
 
-@app.route("/profile/", methods=["GET"])
+@app.route("/profile", methods=["GET"])
 def get_profile_data():
     authid = request.cookies.get('auth_token')
 

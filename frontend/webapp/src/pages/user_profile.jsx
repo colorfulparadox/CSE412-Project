@@ -1,7 +1,8 @@
 import NavBar from '../components/navbar'; 
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
-import { pokepostrequest } from '../api/pokemonapi';
+import { pokepostrequest, pokeapi } from '../api/pokemonapi';
+
 
 // fields should populate on load
 
@@ -11,11 +12,22 @@ export default function Profile() {
     const [blurb, setBlurb] = useState("");
     const password_reference = useRef("");
   
+    async function load_profile() {
+        try {
+            const data = await pokeapi(`/profile`);
+            console.log("DATA:", data[0]);
+            setUsername(data[0].username);
+            setName(data[0].name);
+            setBlurb(data[0].blurb);
+        } catch (err) {
+            console.error("Error:", err);
+        } finally {
+        }
+    }
+
     // on load
     useEffect(() => {
-        // setUsername(username);
-        // setName(name);
-        // setBlurb(blurb);
+        load_profile();
       }, []);
 
     const handleSubmit = (event) => {
