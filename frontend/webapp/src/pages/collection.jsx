@@ -3,18 +3,17 @@ import { Button, Col, Container, Form, Navbar, Table } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
 
-// static authid for testing
-let authid = "9c9c1583-1964-431c-b18f-b48cb4118f68"; // why not
+
 
 async function add(pokedexid) {
     console.log("add");
-    const resp = await pokeapi(`/pokedex/add/${pokedexid}/${authid}`)
+    const resp = await pokeapi(`/pokedex/add/${pokedexid}`)
 }
 
 
 async function remove(pokedexid) {
     console.log("remove");
-    const resp = await pokeapi(`/pokedex/remove/${pokedexid}/${authid}`)
+    const resp = await pokeapi(`/pokedex/remove/${pokedexid}`)
 
 }
 
@@ -23,10 +22,12 @@ export default function Collection() {
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const [searchInput, setSearchInput] = useState("");
+
+    // const [cookies, setCookie] = useCookies(['auth_token'])
   
     async function load_collection() {
         try {
-            const data = await pokeapi(`/pokedex/${authid}`);
+            const data = await pokeapi(`/pokedex`);
             console.log("DATA:", data);
             setPokemonList(data);
         } catch (err) {
@@ -39,7 +40,7 @@ export default function Collection() {
 
     async function load_search(term) {
         try {
-            const data = await pokeapi(`/pokedex/${term}/${authid}`);
+            const data = await pokeapi(`/pokedex/${term}`);
             console.log("DATA:", data);
             setPokemonList(data);
         } catch (err) {

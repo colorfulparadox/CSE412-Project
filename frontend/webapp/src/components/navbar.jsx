@@ -4,9 +4,16 @@ import Container from 'react-bootstrap/Container'
 import Nav from 'react-bootstrap/Nav'
 import { useEffect, useState } from 'react';
 
-function Logout(event, navigate){
-  event.preventDefault();
-  navigate('/');
+async function handleLogout() {
+  try {
+    await fetch("http://localhost:5001/logout", {
+      method: "POST",
+      credentials: "include",
+    });
+    window.location.href = "/login";
+  } catch (error) {
+    console.error("Logout failed:", error);
+  }
 }
 
 export default function NavBar() {
@@ -14,7 +21,7 @@ export default function NavBar() {
 //   const [user, setAdminData] = useState(null);
 
     const onSubmit = (event) => {
-        
+      handleLogout();
     }
 
     return (

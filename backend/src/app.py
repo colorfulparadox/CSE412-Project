@@ -56,8 +56,8 @@ def root(path):
     auth_cookie = request.cookies.get("auth_token")
 
     if not auth_cookie:
-        if request.path not in ["/", "/login"]:
-            return redirect("/")
+        if request.path != "/login":
+            return redirect("/login")
     else:
         if request.path == "/login":
             return redirect("/userprofile")
@@ -75,7 +75,7 @@ def login():
 
     if result == LoginResult.SUCCESS:
         response = make_response({"message": "Login successful", "status": "success"})
-        response.set_cookie('auth_token', auth_token, max_age=60 * 60 * 24 * 30)
+        response.set_cookie('auth_token', auth_token, max_age=60 * 60 * 24 * 30, samesite='Lax', secure=False)
         return response, 200
     else:
         if result == LoginResult.DB_ERROR:
@@ -126,9 +126,11 @@ def get_all_pokemon():
     resp = run_query("SELECT * FROM pokemon")
     return make_response(resp)
 
-@app.route("/pokedex/<authid>", methods=["GET"])
-def get_pokedex(authid):
-    
+@app.route("/pokedex/", methods=["GET"])
+def get_pokedex():
+
+    authid = request.cookies.get('auth_token')
+
     resp = run_query("""
                      SELECT * 
                      FROM pokemon 
@@ -168,9 +170,11 @@ def add_pokemon(pokedexid, authid):
         """, (authid, pokedexid,))
         return jsonify(response="good")
 
-@app.route("/pokedex/remove/<pokedexid>/<authid>", methods=["GET"])
-def remove_pokemon(pokedexid, authid):
-    uid = '1'
+@app.route("/pokedex/remove/<pokedexid>", methods=["GET"])
+def remove_pokemon(pokedexid):
+
+    authid = request.cookies.get('auth_token')
+
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
@@ -192,10 +196,10 @@ def remove_pokemon(pokedexid, authid):
                     """, (authid, pokedexid,))
         return jsonify(response="good")
 
-@app.route("/pokedex/<pokedexid>/<authid>", methods=["GET"])
+@app.route("/pokedex/<pokedexid>", methods=["GET"])
 def get_filtered_pokedex(pokedexid, authid):
-    uid = '1'
-    
+    authid = request.cookies.get('auth_token')
+
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
@@ -222,8 +226,10 @@ def get_filtered_pokedex(pokedexid, authid):
 
     return make_response(resp)
 
-@app.route("/profile/<authid>", methods=["GET"])
-def get_profile_data(authid):
+@app.route("/profile/", methods=["GET"])
+def get_profile_data():
+    authid = request.cookies.get('auth_token')
+
     resp = run_query("""
         SELECT uid, username, name, blurb
         FROM trainer
@@ -231,10 +237,22 @@ def get_profile_data(authid):
     """, (authid,))
     return make_response(resp)
 
-@app.route('/profile/set/<authid>', methods=["POST"])
-def set_profile_data(authid):
+@app.route('/profile/set', methods=["POST"])
+def set_profile_data():
+    authid = request.cookies.get('auth_token')
+
     print(request.get_json())
     return make_response(jsonify("good"))
+
+@app.route("/logout", methods=["POST"])
+def logout():
+    response = make_response(jsonify({"message": "logged out"}))
+    response.set_cookie(
+        "auth_token", "",
+        expires=0,
+        path="/"
+    )
+    return response, 200
 
 if __name__ == "__main__":
     app.run(debug=True, port=5454)

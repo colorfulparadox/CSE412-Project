@@ -3,10 +3,6 @@ import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokepostrequest } from '../api/pokemonapi';
 
-// static authid for testing
-
-let authid = "9c9c1583-1964-431c-b18f-b48cb4118f68"; // why not
-
 // fields should populate on load
 
 export default function Profile() {

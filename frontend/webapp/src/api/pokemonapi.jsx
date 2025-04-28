@@ -1,7 +1,9 @@
-const API_BASE = "http://127.0.0.1:5000";
+const API_BASE = "http://localhost:5001";
 
 export async function pokeapi(path) {
-  const res = await fetch(`${API_BASE}${path}`);
+  const res = await fetch(`${API_BASE}${path}`, {
+    credentials: "include",
+  });
 
   if (!res.ok) {
     throw new Error(`API error: ${res.status} ${res.statusText}`);
@@ -18,6 +20,7 @@ export function pokepostrequest(path, userdatadict) {
         headers: {
             "Content-Type": "application/json",
         },
+        credentials: "include",
         body: JSON.stringify(userdatadict),
     }).then((response) => {
         if (!response.ok) {
