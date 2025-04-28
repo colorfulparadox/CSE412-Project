@@ -91,10 +91,31 @@ export default function StatCompare() {
                         </tr>
                     </thead>
                     <tbody>
-                        <tr key="pokedex_num">
+                    <tr key="pokedex_num">
                             <td>Pokédex #</td>
                             <td>{pokeData1?.pokedex_num}</td>
                             <td>{pokeData2?.pokedex_num}</td>
+                        </tr>
+                    <tr key="img">
+                            <td>Image</td>
+                            <td>
+                                {pokeData1?.name && (
+                                <img 
+                                    src={`https://img.pokemondb.net/artwork/${pokeData1.name.toLowerCase()}.jpg`} 
+                                    alt={pokeData1.name} 
+                                    onError={(e) => { e.target.src = "/placeholder.jpg"; }}
+                                />
+                                )}
+                            </td>
+                            <td>
+                                {pokeData2?.name && (
+                                <img 
+                                    src={`https://img.pokemondb.net/artwork/${pokeData2.name.toLowerCase()}.jpg`} 
+                                    alt={pokeData2.name} 
+                                    onError={(e) => { e.target.src = "/placeholder.jpg"; }}
+                                />
+                                )}
+                            </td>
                         </tr>
                         <tr key="name">
                             <td>Pokémon</td>
