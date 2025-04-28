@@ -141,9 +141,10 @@ def get_pokedex():
                      """, (authid,))
     return make_response(resp)
 
-@app.route("/pokedex/add/<pokedexid>/<authid>", methods=["GET"])
-def add_pokemon(pokedexid, authid):
-    uid = '1'
+@app.route("/pokedex/add/<pokedexid>", methods=["GET"])
+def add_pokemon(pokedexid):
+    authid = request.cookies.get('auth_token')
+
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
@@ -197,7 +198,7 @@ def remove_pokemon(pokedexid):
         return jsonify(response="good")
 
 @app.route("/pokedex/<pokedexid>", methods=["GET"])
-def get_filtered_pokedex(pokedexid, authid):
+def get_filtered_pokedex(pokedexid):
     authid = request.cookies.get('auth_token')
 
     try:
