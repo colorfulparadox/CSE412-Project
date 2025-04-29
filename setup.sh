@@ -3,7 +3,6 @@ echo "### RUNNING SETUP SCRIPT ###"
 
 echo "# SETTING UP DB #"
 cd database
-./cleanup.sh
 ./setup.sh
 cd ..
 
