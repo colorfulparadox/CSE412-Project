@@ -42,9 +42,15 @@ export default function Collection() {
 
     async function load_search(term) {
         try {
-            const data = await pokeapi(`/pokedex/${term}`);
-            console.log("DATA:", data);
-            setPokemonList(data);
+            if (term == "" || term == " ") {
+                load_collection();
+            }
+            else {
+                const data = await pokeapi(`/pokedex/${term}`);
+                console.log("DATA:", data);
+                setPokemonList(data);
+            }
+
         } catch (err) {
             console.error("Error:", err);
             setError(err.message);
