@@ -1,5 +1,6 @@
 import NavBar from '../components/navbar'; 
-import { Button, Col, Container, Form, Navbar, Table } from 'react-bootstrap';
+import PokemonCard from '../components/pokemon_card'; 
+import { Button, Col, Container, Form, Row} from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
 
@@ -79,6 +80,34 @@ export default function GlobalPokedex() {
                         >Search</Button>
                 </Form.Group>
             </Form>
+            <Row>
+                {pokemonList.map((p) => (
+                    <Col key={p.pokedex_num} md={4} className="mb-d">
+                        <PokemonCard
+                            pokemon={{
+                                id: p.pokedex_num,
+                                name: p.name,
+                                image: `https://img.pokemondb.net/artwork/${p.name.toLowerCase()}.jpg`,
+                                type1: p.type1,
+                                type2: p.type2,
+                                bst: p.bst,
+                                hp: p.hp,
+                                atk: p.atk,
+                                def: p.def,
+                                spatk: p.spatk,
+                                spdef: p.spdef,
+                                speed: p.speed,
+                            }}
+                        />
+                    </Col>
+                ))}
+            </Row>
+            
+        </Container>
+        </>
+    );
+}
+/*
             <Table striped bordered hover>
                 <thead>
                     <tr>
@@ -114,7 +143,4 @@ export default function GlobalPokedex() {
 
                 </tbody>
             </Table>
-        </Container>
-        </>
-    );
-}
+            */
