@@ -6,7 +6,7 @@ from flask_cors import CORS
 import os
 
 
-from user import login_user, LoginResult
+from user import *
 
 app = Flask(__name__, static_folder="../../frontend/webapp/dist", static_url_path=None)
 CORS(app, origins="http://localhost:5173", supports_credentials=True)
@@ -53,14 +53,15 @@ def root(path):
     if path != "" and os.path.exists(file_path):
         return send_from_directory(app.static_folder, path)
 
-    auth_cookie = request.cookies.get("auth_token")
+    auth_token = request.cookies.get("auth_token")
+    auth_check_response = verify_auth_token_redirect(db_pool, auth_token)
 
-    if not auth_cookie:
+    if auth_check_response:
         if request.path != "/login" and request.path != "/":
-            return redirect("/login")
+            return auth_check_response
     else:
         if request.path == "/login":
-            return redirect("/userprofile")
+            return redirect("/")
 
     return send_from_directory(app.static_folder, "index.html")
 
@@ -70,12 +71,13 @@ def login():
     username = request.form.get("username")
     password = request.form.get("password")
     #print(request.form)
+    time = 86400
 
-    result, auth_token = login_user(db_pool, username, password)
+    result, auth_token = login_user(db_pool, username, password, time)
 
     if result == LoginResult.SUCCESS:
         response = make_response({"message": "Login successful", "status": "success"})
-        response.set_cookie('auth_token', auth_token, max_age=60 * 60 * 24 * 30, samesite='Lax', secure=False)
+        response.set_cookie('auth_token', auth_token, max_age=time, samesite='Lax', secure=False)
         return response, 200
     else:
         if result == LoginResult.DB_ERROR:
@@ -262,6 +264,8 @@ def set_profile_password():
 
 @app.route("/logout", methods=["POST"])
 def logout():
+    auth_token = request.cookies.get("auth_token")
+    logout_user(db_pool, auth_token)
     response = make_response(jsonify({"message": "logged out"}))
     response.set_cookie(
         "auth_token", "",
