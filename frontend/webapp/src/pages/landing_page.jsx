@@ -1,7 +1,7 @@
 import React from 'react';
 import NavBar from '../components/navbar'; 
 import { Container } from 'react-bootstrap';
-import '../styles/landingpage.css'; // Import the CSS file
+import '../styles/landingpage.css'; 
 
 export default function LandingPage() {
     return (
