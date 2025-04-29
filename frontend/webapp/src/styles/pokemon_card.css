@@ -29,3 +29,11 @@
     padding: 10px;
     font-size: 0.9rem;
 }
+
+.pokemon-card th {
+  font-size: 0.45rem;
+}
+
+.pokemon-card td {
+  font-size: 0.7rem;
+}

@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Card } from 'react-bootstrap';
+import { Card, Table } from 'react-bootstrap';
 import '../styles/pokemon_card.css';
 
 const PokemonCard = ({ pokemon }) => {
@@ -28,6 +28,43 @@ const PokemonCard = ({ pokemon }) => {
     >
       <div className="image-container">
         <Card.Img variant="top" src={image} />
+      </div>
+      <Card.Footer className="d-flex justify-content-between">
+        <strong>{name}</strong>
+        <span className="text-muted">#{id}</span>
+      </Card.Footer>
+      <Table striped bordered hover>
+        <thead>
+            <th>Type 1</th>
+            <th>Type 2</th>
+            <th>Total</th>
+            <th>HP</th>
+            <th>Attack</th>
+            <th>Defense</th>
+            <th>Sp. Atk</th>
+            <th>Sp. Def</th>
+            <th>Speed</th>
+        </thead>
+        <tbody>
+            <td>{type1}</td>
+            <td>{type2}</td>
+            <td>{bst}</td>
+            <td>{hp}</td>
+            <td>{atk}</td>
+            <td>{def}</td>
+            <td>{spatk}</td>
+            <td>{spdef}</td>
+            <td>{speed}</td>
+        </tbody>
+        </Table>
+    </Card>
+  );
+};
+
+export default PokemonCard;
+
+/*
+
         {hovered && (
           <div className="overlay">
             <div className="text">
@@ -43,13 +80,5 @@ const PokemonCard = ({ pokemon }) => {
             </div>
           </div>
         )}
-      </div>
-      <Card.Footer className="d-flex justify-content-between">
-        <strong>{name}</strong>
-        <span className="text-muted">#{id}</span>
-      </Card.Footer>
-    </Card>
-  );
-};
 
-export default PokemonCard;
+*/
