@@ -51,11 +51,11 @@ try:
         usercount = 0
         for row in reader:
             cur.execute("""
-                INSERT INTO trainer (uid, username, name, blurb, password)
-                VALUES (%s, %s, %s, %s, %s)
-                """, (row[0], ("user"+str(usercount)), row[1], row[2], hash_password))
+                INSERT INTO trainer (username, name, blurb, password)
+                VALUES (%s, %s, %s, %s)
+                """, (("user"+str(usercount)), row[1], row[2], hash_password))
             usercount += 1
-            
+    
     with open("data/pokedex.csv") as file:
         reader = csv.reader(file, delimiter=",")
         next(reader, None)
@@ -64,7 +64,7 @@ try:
                 INSERT INTO pokedex (uid, pokedex_num)
                 VALUES (%s, %s)
                 """, (row[0], row[1]))
-
+    
     conn.commit()
     cur.close()
 except Exception as e:

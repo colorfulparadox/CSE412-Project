@@ -4,12 +4,20 @@ DROP TABLE IF EXISTS pokemon;
 DROP TABLE IF EXISTS pokedex;
 
 CREATE TABLE trainer (
-    uid CHAR(24) PRIMARY KEY,
+    uid SERIAL PRIMARY KEY,
     username VARCHAR(32) NOT NULL UNIQUE,
     name VARCHAR(32) NOT NULL,
     blurb TEXT,
     password BYTEA NOT NULL,
     auth_token TEXT
+);
+
+CREATE TABLE auth_tokens (
+    auth_key CHAR(64) PRIMARY KEY,
+    uid INTEGER NOT NULL,
+    issue_date DATE NOT NULL,
+    exp_date DATE NOT NULL,
+    CONSTRAINT fk_trainer FOREIGN KEY (uid) REFERENCES trainer(uid)
 );
 
 CREATE TABLE pokemon (
@@ -40,7 +48,7 @@ CREATE TABLE pokemon (
 );
 
 CREATE TABLE pokedex (
-    uid CHAR(10) NOT NULL,
+    uid INTEGER NOT NULL,
     pokedex_num INT NOT NULL,
     PRIMARY KEY (uid, pokedex_num),
     FOREIGN KEY (uid) REFERENCES trainer(uid) ON DELETE CASCADE,

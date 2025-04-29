@@ -15,7 +15,7 @@ echo " ### Building and Running Docker ###"
 docker-compose up --detach
 
 
-sleep 3
+sleep 5
 
 echo " ### Inserting Test Data! ###"
 
