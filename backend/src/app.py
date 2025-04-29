@@ -56,7 +56,7 @@ def root(path):
     auth_cookie = request.cookies.get("auth_token")
 
     if not auth_cookie:
-        if request.path != "/login":
+        if request.path != "/login" and request.path != "/":
             return redirect("/login")
     else:
         if request.path == "/login":
@@ -81,28 +81,6 @@ def login():
         if result == LoginResult.DB_ERROR:
             print(auth_token)
         return jsonify({"message": "Invalid username or password", "status": "error"}), 401
-
-'''
-@app.route("/user/auth", methods=["GET"])
-def auth_user():
-    pass
-
-@app.route("/login", methods=["POST"])
-def login_user():
-    response = make_response("Logged In")
-    response.set_cookie(
-        "authToken", "123", 
-        httponly=True, 
-        secure=True, 
-        samesite="None", 
-        path="/"
-    )
-    return response
-
-@app.route("/user/create", methods=["POST"])
-def create_user():
-    pass
-'''
 
 @app.route("/pokemon/<pokedexid>", methods=["GET"])
 def get_pokemon(pokedexid):
@@ -141,9 +119,10 @@ def get_pokedex():
                      """, (authid,))
     return make_response(resp)
 
-@app.route("/pokedex/add/<pokedexid>/<authid>", methods=["GET"])
-def add_pokemon(pokedexid, authid):
-    uid = '1'
+@app.route("/pokedex/add/<pokedexid>", methods=["GET"])
+def add_pokemon(pokedexid):
+    authid = request.cookies.get('auth_token')
+
     try:
         pokedexid = int(pokedexid)
         # use pokedex id
@@ -197,7 +176,7 @@ def remove_pokemon(pokedexid):
         return jsonify(response="good")
 
 @app.route("/pokedex/<pokedexid>", methods=["GET"])
-def get_filtered_pokedex(pokedexid, authid):
+def get_filtered_pokedex(pokedexid):
     authid = request.cookies.get('auth_token')
 
     try:
@@ -274,4 +253,4 @@ def logout():
     return response, 200
 
 if __name__ == "__main__":
-    app.run(debug=True, port=5454)
+    app.run(debug=True, port=5001)

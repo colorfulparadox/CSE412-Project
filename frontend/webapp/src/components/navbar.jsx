@@ -6,6 +6,8 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import '../styles/navbar.css'; 
 
+import Cookies from 'js-cookie';
+
 async function handleLogout() {
   try {
     await fetch("http://localhost:5001/logout", {
@@ -15,6 +17,29 @@ async function handleLogout() {
     window.location.href = "/login";
   } catch (error) {
     console.error("Logout failed:", error);
+  }
+}
+
+function AuthButton() {
+  const authCookie = Cookies.get('auth_token');
+  if (authCookie) {
+    return (
+      <Button className="logout-button" variant="outline-primary" onClick={handleLogout}>
+        LOGOUT
+      </Button>
+    );
+  } else {
+    return (
+      <Button
+        className="login-button"
+        variant="outline-primary"
+        onClick={() => {
+          window.location.href = '/login';
+        }}
+      >
+        LOGIN
+      </Button>
+    );
   }
 }
 
@@ -47,9 +72,7 @@ export default function NavBar() {
             <Nav.Link href="/pokedex" className={location.pathname === '/pokedex' ? 'active' : ''}>Pokédex</Nav.Link>
             <Nav.Link href="/userprofile" className={location.pathname === '/userprofile' ? 'active' : ''}>Profile</Nav.Link>
           </Nav>
-          <button className="logout-button" type="submit" onClick={onSubmit}>
-            LOGOUT
-          </button>
+          <AuthButton/>
         </Navbar.Collapse>
       </Container>
     </Navbar>
