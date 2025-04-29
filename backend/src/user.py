@@ -11,6 +11,9 @@ class LoginResult(Enum):
     ERROR = 1,
     DB_ERROR = 2
 
+def check_auth_token(token: str) -> bool:
+    pass
+
 def create_auth_token(cur, username: str) -> str:
     auth_token = str(uuid.uuid4())
     cur.execute("""

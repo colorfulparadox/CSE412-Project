@@ -4,7 +4,7 @@ DROP TABLE IF EXISTS pokemon;
 DROP TABLE IF EXISTS pokedex;
 
 CREATE TABLE trainer (
-    uid CHAR(10) PRIMARY KEY,
+    uid CHAR(24) PRIMARY KEY,
     username VARCHAR(32) NOT NULL UNIQUE,
     name VARCHAR(32) NOT NULL,
     blurb TEXT,
