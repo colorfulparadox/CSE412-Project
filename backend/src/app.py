@@ -135,7 +135,7 @@ def get_pokedex():
                      WHERE pokedex_num IN (
                         SELECT pokedex_num 
                         FROM pokedex 
-                        WHERE uid IN (SELECT uid FROM trainer WHERE auth_token = %s));
+                        WHERE uid IN (SELECT uid FROM auth_tokens WHERE auth_key = %s));
                      """, (authid,))
     return make_response(resp)
 
@@ -149,7 +149,7 @@ def add_pokemon(pokedexid):
         run_query("""
             INSERT INTO pokedex (uid, pokedex_num)
             VALUES (
-                (SELECT uid FROM trainer WHERE auth_token = %s),
+                (SELECT uid FROM auth_tokens WHERE auth_key = %s),
                 %s
             )
             ON CONFLICT (uid, pokedex_num) DO NOTHING;
@@ -161,7 +161,7 @@ def add_pokemon(pokedexid):
         run_query("""
             INSERT INTO pokedex (uid, pokedex_num)
             SELECT 
-                (SELECT uid FROM trainer WHERE auth_token = %s),
+                (SELECT uid FROM auth_tokens WHERE auth_key = %s),
                 pokedex_num
             FROM pokemon
             WHERE LOWER(name) = LOWER(%s)
@@ -179,7 +179,7 @@ def remove_pokemon(pokedexid):
         # use pokedex id
         run_query("""
             DELETE FROM pokedex
-            WHERE uid = (SELECT uid FROM trainer WHERE auth_token = %s)
+            WHERE uid = (SELECT uid FROM auth_tokens WHERE auth_key = %s)
             AND pokedex_num = %s
         """, (authid, pokedexid,))
         return jsonify(response="good")
@@ -188,7 +188,7 @@ def remove_pokemon(pokedexid):
         # use pokemon name
         run_query("""
                     DELETE FROM pokedex
-                    WHERE uid = (SELECT uid FROM trainer WHERE auth_token = %s)
+                    WHERE uid = (SELECT uid FROM auth_tokens WHERE auth_key = %s)
                     AND pokedex_num = (
                     SELECT pokedex_num FROM pokemon WHERE LOWER(name) = LOWER(%s)
                     );
@@ -208,7 +208,7 @@ def get_filtered_pokedex(pokedexid):
                         WHERE pokedex_num IN (
                             SELECT pokedex_num 
                             FROM pokedex 
-                            WHERE uid = (SELECT uid FROM trainer WHERE auth_token = %s)) AND pokedex_num = %s;
+                            WHERE uid = (SELECT uid FROM auth_tokens WHERE auth_key = %s)) AND pokedex_num = %s;
                     """, (authid, pokedexid,))
 
         return make_response(resp)
@@ -220,7 +220,7 @@ def get_filtered_pokedex(pokedexid):
                         WHERE pokedex_num IN (
                             SELECT pokedex_num 
                             FROM pokedex 
-                            WHERE uid = (SELECT uid FROM trainer WHERE auth_token = %s)) AND LOWER(name) = LOWER(%s);
+                            WHERE uid = (SELECT uid FROM auth_tokens WHERE auth_key = %s)) AND LOWER(name) = LOWER(%s);
                     """, (authid, pokedexid,))
 
     return make_response(resp)
@@ -230,9 +230,9 @@ def get_profile_data():
     authid = request.cookies.get('auth_token')
 
     resp = run_query("""
-        SELECT uid, username, name, blurb
+        SELECT username, name, blurb
         FROM trainer
-        WHERE auth_token = %s
+        WHERE uid IN (SELECT uid FROM auth_tokens where auth_key = %s)
     """, (authid,))
     return make_response(resp)
 
@@ -250,7 +250,7 @@ def set_profile_data():
         SET username = %s,
             name = %s,
             blurb = %s
-        WHERE auth_token = %s;
+        WHERE uid IN (SELECT uid FROM auth_tokens where auth_key = %s);
     """, (username, name, blurb, authid, ))
     
     return make_response(jsonify("good"))
