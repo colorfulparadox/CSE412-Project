@@ -58,7 +58,7 @@ def root(path):
 
     if auth_check_response:
         if request.path != "/login" and request.path != "/":
-            return auth_check_response
+            return auth_check_response, 401
     else:
         if request.path == "/login":
             return redirect("/")

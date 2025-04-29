@@ -5,9 +5,12 @@ from enum import Enum
 from datetime import datetime, timedelta
 from flask import redirect, make_response
 
-SALT_SIZE = 12
-
 class LoginResult(Enum):
+    SUCCESS = 0,
+    ERROR = 1,
+    DB_ERROR = 2
+
+class SignUpResult(Enum):
     SUCCESS = 0,
     ERROR = 1,
     DB_ERROR = 2
@@ -55,6 +58,9 @@ def verify_auth_token_redirect(db_pool, key: str):
 
     return None
 
+def hash_password(password: str) -> bytes:
+    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt(8))
+
 def create_auth_token(cur, uid: str, time: float) -> str:
     now = datetime.now()
     expires = now + timedelta(seconds=time)
@@ -69,7 +75,7 @@ def create_auth_token(cur, uid: str, time: float) -> str:
 def create_new_user(db_pool, name: str, username: str, password: str): 
     pass
     #password = "password".encode('utf-8')
-    #hash_password = bcrypt.hashpw(password, bcrypt.gensalt(8))
+    hash_password = bcrypt.hashpw(password, bcrypt.gensalt(8))
     #resp = run_query("INSERT INTO trainer VALUES (%s, %s, %s);", (username, name, hash_password))
 
 
