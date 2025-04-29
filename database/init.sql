@@ -17,7 +17,7 @@ CREATE TABLE auth_tokens (
     uid INTEGER NOT NULL,
     issue_date DATE NOT NULL,
     exp_date DATE NOT NULL,
-    CONSTRAINT fk_trainer FOREIGN KEY (uid) REFERENCES trainer(uid)
+    CONSTRAINT fk_trainer FOREIGN KEY (uid) REFERENCES trainer(uid) ON DELETE CASCADE
 );
 
 CREATE TABLE pokemon (
