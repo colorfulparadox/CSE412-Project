@@ -8,6 +8,7 @@ import UserProfile from './pages/user_profile.jsx';
 import Collection from './pages/collection.jsx';
 import Pokedex from './pages/globalpokedex.jsx';
 import StatCompare from './pages/statcompare.jsx';
+import MyPokedex from './pages/my_pokedex';
 
 function App() {
   const path = window.location.pathname
@@ -26,8 +27,8 @@ function App() {
   else if ((path.startsWith("/collection"))) {
     return <Collection/>
   }
-  else if ((path.startsWith("/pokedex"))) {
-    return <Pokedex/>
+  else if ((path.startsWith("/mypokedex"))) {
+    return <MyPokedex/>
   }
   else {
     return <Page404/>
