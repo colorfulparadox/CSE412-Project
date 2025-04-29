@@ -16,6 +16,7 @@ export default function Login() {
 
     const [signup, setSignup] = useState(false)
     const [username, setUsername] = useState("");
+    const [name, setName] = useState("");
     const [password, setPassword] = useState("");
     const [errorMessage, setErrorMessage] = useState("");
   
@@ -50,6 +51,39 @@ export default function Login() {
             setErrorMessage("An error occurred. Please try again.")
           }
     }
+
+    const handleSignup = async(e) => {
+      e.preventDefault()
+
+      const formData = new FormData()
+      formData.append("username", username)
+      formData.append("password", password)
+      formData.append("name", name)
+
+      try {
+          const response = await fetch("/signup", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/x-www-form-urlencoded",
+            },
+            credentials: "include",
+            body: new URLSearchParams(formData),
+          })
+    
+          const result = await response.json()
+
+          console.log(result);
+    
+          if (response.ok) {
+            window.location.href = "/"
+          } else {
+            setErrorMessage(result.message)
+          }
+        } catch (error) {
+          console.error("Sign up failed:", error)
+          setErrorMessage("An error occurred. Please try again.")
+        }
+  }
 
     const loginClick = () => {
         setSignup(false)
@@ -95,8 +129,16 @@ export default function Login() {
             <LoginMenu loginClick={loginClick} signupClick={signupClick} />
             <h3>Sign Up</h3>
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <Form onSubmit={handleLogin}>
+            <Form onSubmit={handleSignup}>
                 <Form.Group className="mb-5">
+                    <Form.Label>Name:</Form.Label>
+                    <Form.Control 
+                    type="text" 
+                    placeholder="name" 
+                    id="nameForm"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                    />
                     <Form.Label>Username:</Form.Label>
                     <Form.Control 
                     type="text" 

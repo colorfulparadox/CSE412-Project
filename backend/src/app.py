@@ -82,6 +82,24 @@ def login():
             print(auth_token)
         return jsonify({"message": "Invalid username or password", "status": "error"}), 401
 
+@app.route("/signup", methods=["POST"])
+def signup():
+    username = request.form.get("name")
+    username = request.form.get("username")
+    password = request.form.get("password")
+    print(request.form)
+    return jsonify({"message": "HELLO", "status": "error"}), 401
+    # result, auth_token = login_user(db_pool, name, username, password)
+
+    # if result == LoginResult.SUCCESS:
+    #     response = make_response({"message": "Login successful", "status": "success"})
+    #     response.set_cookie('auth_token', auth_token, max_age=60 * 60 * 24 * 30, samesite='Lax', secure=False)
+    #     return response, 200
+    # else:
+    #     if result == LoginResult.DB_ERROR:
+    #         print(auth_token)
+    #     return jsonify({"message": "Invalid username or password", "status": "error"}), 401
+
 @app.route("/pokemon/<pokedexid>", methods=["GET"])
 def get_pokemon(pokedexid):
     # I could just also do another endpoint for accessing by 

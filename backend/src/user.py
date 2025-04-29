@@ -23,6 +23,11 @@ def create_auth_token(cur, username: str) -> str:
     """, (auth_token, username))
     return auth_token
 
+def create_new_user(db_pool, name: str, username: str, password: str): 
+    password = "password".encode('utf-8')
+    hash_password = bcrypt.hashpw(password, bcrypt.gensalt(8))
+    resp = run_query("INSERT INTO trainer VALUES (%s, %s, %s);", (username, name, hash_password))
+
 
 def login_user(db_pool, username: str, password: str) -> tuple[LoginResult, str]:
     conn = db_pool.getconn()
