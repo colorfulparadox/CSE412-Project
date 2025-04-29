@@ -24,11 +24,11 @@ function App() {
   else if ((path.startsWith("/statcompare"))) {
     return <StatCompare/>
   }
-  else if ((path.startsWith("/collection"))) {
+  else if ((path.startsWith("/mypokedex"))) {
     return <Collection/>
   }
-  else if ((path.startsWith("/mypokedex"))) {
-    return <MyPokedex/>
+  else if ((path.startsWith("/globalpokedex"))) {
+    return <Pokedex/>
   }
   else {
     return <Page404/>
