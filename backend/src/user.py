@@ -72,13 +72,6 @@ def create_auth_token(cur, uid: str, time: float) -> str:
     """, (auth_token, uid, now, expires))
     return auth_token
 
-def create_new_user(db_pool, name: str, username: str, password: str): 
-    pass
-    #password = "password".encode('utf-8')
-    hash_password = bcrypt.hashpw(password, bcrypt.gensalt(8))
-    #resp = run_query("INSERT INTO trainer VALUES (%s, %s, %s);", (username, name, hash_password))
-
-
 def login_user(db_pool, username: str, password: str, time: float) -> tuple[LoginResult, str]:
     conn = db_pool.getconn()
     try:
@@ -121,3 +114,9 @@ def logout_user(db_pool, key: str):
         conn.rollback()
     finally:
         db_pool.putconn(conn)
+
+
+def create_new_user(db_pool, name: str, username: str, password: str):
+    #password = "password".encode('utf-8')
+    hash_password = bcrypt.hashpw(password, bcrypt.gensalt(8))
+    #resp = run_query("INSERT INTO trainer VALUES (%s, %s, %s);", (username, name, hash_password))
