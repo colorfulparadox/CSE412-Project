@@ -1,7 +1,7 @@
 import NavBar from '../components/navbar'; 
 import PokemonCard from '../components/pokemon_card'; 
 
-import { Button, Col, Container, Form, Row } from 'react-bootstrap';
+import { Button, Col, Table, Container, Form, Row } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
 
@@ -124,28 +124,51 @@ export default function Collection() {
             </Form>
             <Button onClick={handleClick} name="add">Add new Pokémon</Button>
             <Button onClick={handleClick} name="remove">Remove Pokémon</Button>
-            <Row>
-                {pokemonList.map((p) => (
-                    <Col key={p.pokedex_num} md={4} className="mb-d">
-                        <PokemonCard
-                            pokemon={{
-                                id: p.pokedex_num,
-                                name: p.name,
-                                image: `https://img.pokemondb.net/artwork/${p.name.toLowerCase()}.jpg`,
-                                type1: p.type1,
-                                type2: p.type2,
-                                bst: p.bst,
-                                hp: p.hp,
-                                atk: p.atk,
-                                def: p.def,
-                                spatk: p.spatk,
-                                spdef: p.spdef,
-                                speed: p.speed,
-                            }}
-                        />
-                    </Col>
-                ))}
-            </Row>
+            <Table bordered hover>
+                <thead>
+                    <tr>
+                        <th>Image</th>
+                        <th>Pokédex #</th>
+                        <th>Pokémon</th>
+                        <th>Type 1</th>
+                        <th>Type 2</th>
+                        <th>Total</th>
+                        <th>HP</th>
+                        <th>Attack</th>
+                        <th>Defense</th>
+                        <th>Sp. Atk</th>
+                        <th>Sp. Def</th>
+                        <th>Speed</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {pokemonList.map(p => (
+                        <tr key={p.pokedex_num}>
+                            <td>
+                                <img 
+                                src={`https://img.pokemondb.net/artwork/${p.name.toLowerCase()}.jpg`} 
+                                alt={p.name}
+                                width={100}
+                                height={100} 
+                                onError={(e) => { e.target.src = "/placeholder.jpg"; }}
+                                />
+                            </td>
+                            <td>{p.pokedex_num}</td>
+                            <td>{p.name}</td>
+                            <td>{p.type1}</td>
+                            <td>{p.type2}</td>
+                            <td>{p.bst}</td>
+                            <td>{p.hp}</td>
+                            <td>{p.atk}</td>
+                            <td>{p.def}</td>
+                            <td>{p.spatk}</td>
+                            <td>{p.spdef}</td>
+                            <td>{p.speed}</td>
+                        </tr>
+                    ))}
+
+                </tbody>
+            </Table>
         </Container>
         </>
     );
