@@ -59,7 +59,7 @@ def verify_auth_token_redirect(db_pool, key: str):
     return None
 
 def hash_password(password: str) -> bytes:
-    return bcrypt.hashpw(password.encode("utf-8"), bcrypt.gensalt(8))
+    return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt(8))
 
 def create_auth_token(cur, uid: str, time: float) -> str:
     now = datetime.now()
@@ -116,7 +116,44 @@ def logout_user(db_pool, key: str):
         db_pool.putconn(conn)
 
 
-def create_new_user(db_pool, name: str, username: str, password: str):
+def create_new_user(db_pool, name: str, username: str, password: str) -> tuple[SignUpResult, str]:
     #password = "password".encode('utf-8')
-    hash_password = bcrypt.hashpw(password, bcrypt.gensalt(8))
+    conn = db_pool.getconn()
+    try:
+        with conn.cursor() as cur:
+                cur.execute("""
+                    SELECT username 
+                    FROM trainer 
+                    WHERE username = %s;
+                """, (username,))
+                result = cur.fetchall()
+
+                if result != []:
+                    print("WHAT THE FUCK")
+                    return SignUpResult.ERROR, "Username already taken"
+
+                hashed_password = hash_password(password)
+
+                cur.execute("""
+                    INSERT INTO trainer (username, name, blurb, password)
+                    VALUES (%s, %s, '', %s); 
+                """, (username, name, hashed_password))
+                conn.commit()
+
+                return SignUpResult, ""
+                
+    except Exception as e:
+        print("DB Error:", e)
+        conn.rollback()
+        return SignUpResult.ERROR, e
+    finally:
+        db_pool.putconn(conn)
+    return SignUpResult.ERROR, "Error creating account"
+
+
+
+
+
+
+    #hash_password = bcrypt.hashpw(password, bcrypt.gensalt(8))
     #resp = run_query("INSERT INTO trainer VALUES (%s, %s, %s);", (username, name, hash_password))

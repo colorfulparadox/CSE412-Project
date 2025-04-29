@@ -86,10 +86,19 @@ def login():
 
 @app.route("/signup", methods=["POST"])
 def signup():
-    username = request.form.get("name")
+    name = request.form.get("name")
     username = request.form.get("username")
     password = request.form.get("password")
     print(request.form)
+
+    result, message = create_new_user(db_pool, name, username, password)
+
+    if result == SignUpResult.SUCCESS:
+        response = make_response({"message": "Signup successful", "status": "success"})
+        return response, 200
+    else:
+        return jsonify({"message": f"{message}", "status": "error"}), 401
+
 
     return jsonify({"message": "Invalid username or password", "status": "error"}), 401
 

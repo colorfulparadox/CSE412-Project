@@ -10,7 +10,7 @@ import Cookies from 'js-cookie';
 
 async function handleLogout() {
   try {
-    await fetch("http://localhost:5001/logout", {
+    await fetch("/logout", {
       method: "POST",
       credentials: "include",
     });
