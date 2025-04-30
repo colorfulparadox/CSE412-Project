@@ -11,6 +11,16 @@ from user import *
 app = Flask(__name__, static_folder="../../frontend/webapp/dist", static_url_path=None)
 CORS(app, origins="http://localhost:5001", supports_credentials=True)
 
+app.config['SEND_FILE_MAX_AGE_DEFAULT'] = 0
+
+@app.after_request
+def add_no_cache_headers(response):
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    response.headers.pop("ETag", None)
+    response.headers.pop("Last-Modified", None)
+    return response
 
 db_pool = psycopg2.pool.ThreadedConnectionPool(
     minconn=1,
