@@ -16,3 +16,6 @@ echo "# SETTING UP BACKEND DEP #"
 cd backend
 ./setup.sh
 cd ..
+
+echo "### SETUP COMPLETE ###"
+echo "TO RUN THE APP RUN THE ./run.sh SCRIPT"
