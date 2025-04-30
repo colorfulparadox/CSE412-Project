@@ -1,7 +1,7 @@
 from urllib import response
 import psycopg2.pool
 import psycopg2.extras
-from flask import Flask, send_from_directory, jsonify, request, redirect, url_for, make_response
+from flask import Flask, send_from_directory, jsonify, request, redirect, url_for, make_response, send_file
 from flask_cors import CORS
 import os
 
@@ -67,7 +67,12 @@ def root(path):
             return redirect("/")
 
 
-    return send_from_directory(app.static_folder, "index.html")
+    index_file = os.path.join(app.static_folder, "index.html")
+    response = make_response(send_file(index_file))
+    response.headers["Cache-Control"] = "no-cache, no-store, must-revalidate"
+    response.headers["Pragma"] = "no-cache"
+    response.headers["Expires"] = "0"
+    return response
 
 
 @app.route("/login", methods=["POST"])
