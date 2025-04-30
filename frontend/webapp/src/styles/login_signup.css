@@ -1,0 +1,49 @@
+.login-page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('/ui_assets/Background_crop.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+}
+
+.signup-page {
+    position: relative;
+    width: 100%;
+    height: 100vh;
+    background-image: url('/ui_assets/Background_crop.png');
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    overflow-x: hidden;
+}
+
+.content {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    padding: 5vh 5vw 100px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    color: black;
+    font-family: 'Chivo Mono', monospace;
+}
+
+.auth-button {
+    font-family: 'Montserrat', sans-serif;
+    font-weight: 700;
+    border: 2px solid #4f6d7a;
+    color: #4f6d7a;
+    background-color: transparent;
+    transition: all 0.3s ease;
+}
+
+.auth-button:hover {
+    background-color: #f3c505;
+    color: #0e2454;
+}

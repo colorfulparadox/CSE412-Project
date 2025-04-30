@@ -24,13 +24,13 @@ function AuthButton() {
   const authCookie = Cookies.get('auth_token');
   if (authCookie) {
     return (
-      <Button className="logout-button" variant="outline-primary" onClick={handleLogout}>
+      <button className="logout-button" variant="outline-primary" onClick={handleLogout}>
         LOGOUT
-      </Button>
+      </button>
     );
   } else {
     return (
-      <Button
+      <button
         className="login-button"
         variant="outline-primary"
         onClick={() => {
@@ -38,7 +38,7 @@ function AuthButton() {
         }}
       >
         LOGIN
-      </Button>
+      </button>
     );
   }
 }

@@ -2,162 +2,169 @@ import React, { useState } from "react";
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
+import NavBar from '../components/navbar'; 
+import '../styles/login_signup.css';
 
-const LoginMenu = ({loginClick, signupClick}) => {
-    return (
-      <Container>
-        <Button onClick={loginClick}>Login</Button>
-        <Button onClick={signupClick}>Sign Up</Button>
-      </Container>
-    )
+const LoginMenu = ({ loginClick, signupClick }) => {
+  return (
+    <Container className="mb-4">
+      <Button className="auth-button me-2" onClick={loginClick}>Login</Button>
+      <Button className="auth-button" onClick={signupClick}>Sign Up</Button>
+    </Container>
+  );
 }
 
 export default function Login() {
 
-    const [signup, setSignup] = useState(false)
-    const [username, setUsername] = useState("");
-    const [name, setName] = useState("");
-    const [password, setPassword] = useState("");
-    const [errorMessage, setErrorMessage] = useState("");
-  
-    const handleLogin = async(e) => {
-        e.preventDefault()
+  const [signup, setSignup] = useState(false)
+  const [username, setUsername] = useState("");
+  const [name, setName] = useState("");
+  const [password, setPassword] = useState("");
+  const [errorMessage, setErrorMessage] = useState("");
 
-        const formData = new FormData()
-        formData.append("username", username)
-        formData.append("password", password)
+  const handleLogin = async (e) => {
+    e.preventDefault()
 
-        try {
-            const response = await fetch("/login", {
-              method: "POST",
-              headers: {
-                "Content-Type": "application/x-www-form-urlencoded",
-              },
-              credentials: "include",
-              body: new URLSearchParams(formData),
-            })
-      
-            const result = await response.json()
+    const formData = new FormData()
+    formData.append("username", username)
+    formData.append("password", password)
 
-            console.log(result);
-      
-            if (response.ok) {
-              window.location.href = "/"
-            } else {
-              setErrorMessage(result.message)
-            }
-          } catch (error) {
-            console.error("Login failed:", error)
-            setErrorMessage("An error occurred. Please try again.")
-          }
+    try {
+      const response = await fetch("http://localhost:5001/login", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        credentials: "include",
+        body: new URLSearchParams(formData),
+      })
+
+      const result = await response.json()
+
+      console.log(result);
+
+      if (response.ok) {
+        window.location.href = "/"
+      } else {
+        setErrorMessage(result.message)
+      }
+    } catch (error) {
+      console.error("Login failed:", error)
+      setErrorMessage("An error occurred. Please try again.")
     }
-
-    const handleSignup = async(e) => {
-      e.preventDefault()
-
-      const formData = new FormData()
-      formData.append("username", username)
-      formData.append("password", password)
-      formData.append("name", name)
-
-      try {
-          const response = await fetch("/signup", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/x-www-form-urlencoded",
-            },
-            credentials: "include",
-            body: new URLSearchParams(formData),
-          })
-    
-          const result = await response.json()
-
-          console.log(result);
-    
-          if (response.ok) {
-            window.location.href = "/"
-          } else {
-            setErrorMessage(result.message)
-          }
-        } catch (error) {
-          console.error("Sign up failed:", error)
-          setErrorMessage("An error occurred. Please try again.")
-        }
   }
 
-    const loginClick = () => {
-        setSignup(false)
-    }
-    const signupClick = () => {
-        setSignup(true)
-    }
+  const handleSignup = async (e) => {
+    e.preventDefault()
 
-    //action="/login" method="POST"
-    if (!signup) {
-        return (
-            <Container>
-                <LoginMenu loginClick={loginClick} signupClick={signupClick} />
-                <h3>Login</h3>
-                {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-                <Form onSubmit={handleLogin}>
-                    <Form.Group className="mb-5">
-                        <Form.Label>Username:</Form.Label>
-                        <Form.Control 
-                        type="text" 
-                        placeholder="username" 
-                        id="usernameForm"
-                        value={username}
-                        onChange={(e) => setUsername(e.target.value)}
-                        />
-                        <Form.Label>Password:</Form.Label>
-                        <Form.Control 
-                        type="password" 
-                        placeholder="password" 
-                        id="passwordForm" 
-                        value={password}
-                        onChange={(e) => setPassword(e.target.value)}
-                        />
-                        <Button className="LoginButton" variant="primary" type="submit">Login</Button>{' '}
-                    </Form.Group>
-                </Form>
-            </Container>
-        )
+    const formData = new FormData()
+    formData.append("username", username)
+    formData.append("password", password)
+    formData.append("name", name)
+
+    try {
+      const response = await fetch("/signup", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/x-www-form-urlencoded",
+        },
+        credentials: "include",
+        body: new URLSearchParams(formData),
+      })
+
+      const result = await response.json()
+
+      console.log(result);
+
+      if (response.ok) {
+        window.location.href = "/"
+      } else {
+        setErrorMessage(result.message)
+      }
+    } catch (error) {
+      console.error("Sign up failed:", error)
+      setErrorMessage("An error occurred. Please try again.")
     }
-    
-    return (
-        <Container>
+  }
+
+  const loginClick = () => {
+    setSignup(false)
+  }
+  const signupClick = () => {
+    setSignup(true)
+  }
+
+  //action="/login" method="POST"
+  return (
+    <>
+      <NavBar />
+      {!signup ? (
+        <div className="login-page">
+          <Container>
+            <LoginMenu loginClick={loginClick} signupClick={signupClick} />
+            <h3>Login</h3>
+            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+            <Form onSubmit={handleLogin}>
+              <Form.Group className="mb-5">
+                <Form.Label>Username:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="username"
+                  id="usernameForm"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="password"
+                  id="passwordForm"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button className="auth-button mt-3" type="submit">Login</Button>{' '}
+              </Form.Group>
+            </Form>
+          </Container>
+        </div>
+      ) : (
+        <div className="signup-page">
+          <Container>
             <LoginMenu loginClick={loginClick} signupClick={signupClick} />
             <h3>Sign Up</h3>
             {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
             <Form onSubmit={handleSignup}>
-                <Form.Group className="mb-5">
-                    <Form.Label>Name:</Form.Label>
-                    <Form.Control 
-                    type="text" 
-                    placeholder="name" 
-                    id="nameForm"
-                    value={name}
-                    onChange={(e) => setName(e.target.value)}
-                    />
-                    <Form.Label>Username:</Form.Label>
-                    <Form.Control 
-                    type="text" 
-                    placeholder="username" 
-                    id="usernameForm"
-                    value={username}
-                    onChange={(e) => setUsername(e.target.value)}
-                    />
-                    <Form.Label>Password:</Form.Label>
-                    <Form.Control 
-                    type="password" 
-                    placeholder="password" 
-                    id="passwordForm" 
-                    value={password}
-                    onChange={(e) => setPassword(e.target.value)}
-                    />
-                    <Button className="LoginButton" variant="primary" type="submit">Sign Up</Button>{' '}
-                </Form.Group>
+              <Form.Group className="mb-5">
+                <Form.Label>Name:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="name"
+                  id="nameForm"
+                  value={name}
+                  onChange={(e) => setName(e.target.value)}
+                />
+                <Form.Label>Username:</Form.Label>
+                <Form.Control
+                  type="text"
+                  placeholder="username"
+                  id="usernameForm"
+                  value={username}
+                  onChange={(e) => setUsername(e.target.value)}
+                />
+                <Form.Label>Password:</Form.Label>
+                <Form.Control
+                  type="password"
+                  placeholder="password"
+                  id="passwordForm"
+                  value={password}
+                  onChange={(e) => setPassword(e.target.value)}
+                />
+                <Button className="auth-button mt-3" type="submit">Sign Up</Button>{' '}
+              </Form.Group>
             </Form>
-        </Container>
-    )
+          </Container>
+        </div>
+      )}
+    </>
+  )
 }
