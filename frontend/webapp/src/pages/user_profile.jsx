@@ -119,9 +119,9 @@ export default function Profile() {
                         
                         <Form.Label id="error-label" hidden>Error</Form.Label><br/>
                         <Button variant="primary" type="submit" 
-                        className="mb-5"
+                        className="btn-update mb-5"
                         onClick={handleSubmit}
-                        >Update</Button>
+                        >UPDATE</Button>
                         <br/>
                         <Form.Group>
                             <Form.Label htmlFor="pw_input" className="description">Set new password</Form.Label>
@@ -133,9 +133,9 @@ export default function Profile() {
                                 id="pw_input"/>
                         </Form.Group>
                         <Button variant="primary" type="submit" 
-                            className="mb-3"
+                            className="btn-password mb-3"
                             onClick={pwupdate_submit}
-                            >Update Password</Button>
+                            >UPDATE PASSWORD</Button>
                     </Col>
                 </Row>
             </Container>

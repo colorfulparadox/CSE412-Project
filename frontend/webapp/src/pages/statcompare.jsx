@@ -68,7 +68,7 @@ export default function StatCompare() {
         <>
         <NavBar/>
         <Container>
-            <h1 className="page-title">Stat Comparison</h1>
+            <h1 className="page-title mt-4">Stat Comparison</h1>
             <p className="description">Choose two Pokémon and compare their stats</p>
             <Form>
                 <Form.Group>
@@ -77,9 +77,9 @@ export default function StatCompare() {
                     <Form.Control type="text" name="poke2" value={poke2} id="poke2" placeholder='Enter the second Pokémon name or Pokédex ID' className="mb-4"
                     onChange={handleChange}></Form.Control>
                     <Button type="submit" 
-                        className="mb-3"
+                        className="btn-search mb-3"
                         onClick={handleSubmit}
-                        >Compare</Button>
+                        >COMPARE</Button>
                 </Form.Group>
             </Form>
             {showTable && (

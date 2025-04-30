@@ -112,19 +112,19 @@ export default function Collection() {
         <>
         <NavBar/>
         <Container>
-            <h1 className="page-title">Pokémon Collection (Trainer Pokédex)</h1>
+            <h1 className="page-title mt-4">Pokémon Collection (Trainer Pokédex)</h1>
             <p className="description">View your Pokédex, search, add, or remove Pokémon.</p>
             <Form>
                 <Form.Group>
                     <Form.Control type="text" name="searchinput" id="searchinput" value={searchInput} onChange={handleChange} placeholder='Enter a Pokémon name or Pokédex ID' className="mb-4"></Form.Control>
                     <Button type="submit" 
-                        className="mb-3"
+                        className="btn-search mb-3"
                         onClick={handleSubmit}
-                        >Search</Button>
+                        >SEARCH</Button>
                 </Form.Group>
             </Form>
-            <Button onClick={handleClick} name="add" className="me-3 mb-4">Add New Pokémon</Button>
-            <Button onClick={handleClick} name="remove" className="mb-4">Remove Pokémon</Button>
+            <Button onClick={handleClick} name="add" className="btn-add me-3 mb-4">Add New Pokémon</Button>
+            <Button onClick={handleClick} name="remove" className="btn-remove mb-4">Remove Pokémon</Button>
             <Table bordered hover>
                 <thead>
                     <tr>

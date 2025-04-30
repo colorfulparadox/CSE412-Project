@@ -70,15 +70,15 @@ export default function GlobalPokedex() {
         <>
         <NavBar/>
         <Container>
-            <h1 className="page-title">All Pokémon (Global Pokédex)</h1>
+            <h1 className="page-title mt-4">All Pokémon (Global Pokédex)</h1>
             <p className="description">View the global Pokédex and search for Pokémon.</p>
             <Form>
                 <Form.Group>
                     <Form.Control type="text" name="searchinput" id="searchinput" value={searchInput} onChange={handleChange} placeholder='Enter a Pokémon name or Pokédex ID' className="mb-4"></Form.Control>
                     <Button type="submit" 
-                        className="mb-3"
+                        className="btn-search mb-3"
                         onClick={handleSubmit}
-                        >Search</Button>
+                        >SEARCH</Button>
                 </Form.Group>
             </Form>
             <Row>
