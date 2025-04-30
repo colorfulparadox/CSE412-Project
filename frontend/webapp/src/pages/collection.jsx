@@ -118,13 +118,13 @@ export default function Collection() {
                 <Form.Group>
                     <Form.Control type="text" name="searchinput" id="searchinput" value={searchInput} onChange={handleChange} placeholder='Enter a Pokémon name or Pokédex ID' className="mb-4"></Form.Control>
                     <Button type="submit" 
-                        className="btn-search mb-3"
+                        className="btn-search me-3 mb-3"
                         onClick={handleSubmit}
                         >SEARCH</Button>
+                    <Button onClick={handleClick} name="add" className="btn-add me-3 mb-3">Add New Pokémon</Button>
+                    <Button onClick={handleClick} name="remove" className="btn-remove me-3 mb-3">Remove Pokémon</Button>
                 </Form.Group>
             </Form>
-            <Button onClick={handleClick} name="add" className="btn-add me-3 mb-4">Add New Pokémon</Button>
-            <Button onClick={handleClick} name="remove" className="btn-remove mb-4">Remove Pokémon</Button>
             <Table bordered hover>
                 <thead>
                     <tr>
