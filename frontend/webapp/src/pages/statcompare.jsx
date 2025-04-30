@@ -2,6 +2,7 @@ import NavBar from '../components/navbar';
 import { Button, Col, Container, Form, Table } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
+import '../styles/landingpage.css'; 
 
 
 export default function StatCompare() {
@@ -67,13 +68,13 @@ export default function StatCompare() {
         <>
         <NavBar/>
         <Container>
-            <h1>Stat Comparison</h1>
-            <p>Choose two Pokémon and compare their stats</p>
+            <h1 className="page-title">Stat Comparison</h1>
+            <p className="description">Choose two Pokémon and compare their stats</p>
             <Form>
                 <Form.Group>
-                    <Form.Control type="text" name="poke1" value={poke1} id="poke1" placeholder='Enter the first Pokémon name or Pokédex ID'
+                    <Form.Control type="text" name="poke1" value={poke1} id="poke1" placeholder='Enter the first Pokémon name or Pokédex ID' className="mb-3" 
                     onChange={handleChange}></Form.Control>
-                    <Form.Control type="text" name="poke2" value={poke2} id="poke2" placeholder='Enter the second Pokémon name or Pokédex ID'
+                    <Form.Control type="text" name="poke2" value={poke2} id="poke2" placeholder='Enter the second Pokémon name or Pokédex ID' className="mb-4"
                     onChange={handleChange}></Form.Control>
                     <Button type="submit" 
                         className="mb-3"

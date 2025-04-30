@@ -4,6 +4,7 @@ import PokemonCard from '../components/pokemon_card';
 import { Button, Col, Table, Container, Form, Row } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
+import '../styles/landingpage.css'; 
 
 
 
@@ -111,19 +112,19 @@ export default function Collection() {
         <>
         <NavBar/>
         <Container>
-            <h1>Pokémon Collection (Trainer Pokédex)</h1>
-            <p>View your Pokédex, search, add, or remove Pokémon.</p>
+            <h1 className="page-title">Pokémon Collection (Trainer Pokédex)</h1>
+            <p className="description">View your Pokédex, search, add, or remove Pokémon.</p>
             <Form>
                 <Form.Group>
-                    <Form.Control type="text" name="searchinput" id="searchinput" value={searchInput} onChange={handleChange} placeholder='Enter a Pokémon name or Pokédex ID'></Form.Control>
+                    <Form.Control type="text" name="searchinput" id="searchinput" value={searchInput} onChange={handleChange} placeholder='Enter a Pokémon name or Pokédex ID' className="mb-4"></Form.Control>
                     <Button type="submit" 
                         className="mb-3"
                         onClick={handleSubmit}
                         >Search</Button>
                 </Form.Group>
             </Form>
-            <Button onClick={handleClick} name="add">Add new Pokémon</Button>
-            <Button onClick={handleClick} name="remove">Remove Pokémon</Button>
+            <Button onClick={handleClick} name="add" className="me-3 mb-4">Add New Pokémon</Button>
+            <Button onClick={handleClick} name="remove" className="mb-4">Remove Pokémon</Button>
             <Table bordered hover>
                 <thead>
                     <tr>

@@ -59,6 +59,12 @@ h1 {
     margin-bottom: 20px;
 }
 
+.page-title {
+    font-family: 'Chivo Mono', monospace;
+    font-size: 2.5rem;
+    margin-bottom: 20px;
+    font-weight: 600;
+}
 
 .pokeball {
     width: 40px;

@@ -65,9 +65,9 @@ export default function NavBar() {
         <Navbar.Toggle aria-controls="basic-navbar-nav" />
         <Navbar.Collapse id="basic-navbar-nav">
           <Nav className="me-auto nav-links">
-            <Nav.Link href="/globalpokedex" className={location.pathname === '/globalpokedex' ? 'active' : ''}>Pokemon</Nav.Link>
+            <Nav.Link href="/globalpokedex" className={location.pathname === '/globalpokedex' ? 'active' : ''}>Pokémon</Nav.Link>
             <Nav.Link href="/statcompare" className={location.pathname === '/statcompare' ? 'active' : ''}>Stat Comparison</Nav.Link>
-            <Nav.Link href="/mypokedex" className={location.pathname === '/mypokedex' ? 'active' : ''}>My Pokedex</Nav.Link>
+            <Nav.Link href="/mypokedex" className={location.pathname === '/mypokedex' ? 'active' : ''}>My Pokédex</Nav.Link>
             <Nav.Link href="/userprofile" className={location.pathname === '/userprofile' ? 'active' : ''}>My Profile</Nav.Link>
           </Nav>
           <AuthButton/>

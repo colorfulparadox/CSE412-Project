@@ -2,6 +2,7 @@ import NavBar from '../components/navbar';
 import { Container, Row, Col, Form, Button } from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokepostrequest, pokeapi } from '../api/pokemonapi';
+import '../styles/landingpage.css'; 
 
 
 // fields should populate on load
@@ -84,9 +85,9 @@ export default function Profile() {
             <Container>
                 <Row>
                     <Col style={{ padding: '20px' }}>
-                        <h1>Trainer Profile</h1>
+                        <h1 className="page-title">Trainer Profile</h1>
                         <Form.Group>
-                            <Form.Label htmlFor="inputUsername">Username</Form.Label>
+                            <Form.Label htmlFor="inputUsername" className="description">Username</Form.Label>
                             <Form.Control 
                                 type="username"
                                 name="username"
@@ -96,7 +97,7 @@ export default function Profile() {
                                 onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label htmlFor="inputName">Name</Form.Label>
+                            <Form.Label htmlFor="inputName" className="description">Name</Form.Label>
                             <Form.Control 
                                 type="name"
                                 name="name"
@@ -106,24 +107,24 @@ export default function Profile() {
                                 onChange={handleChange}/>
                         </Form.Group>
                         <Form.Group>
-                            <Form.Label htmlFor="inputBlurb">Blurb</Form.Label>
+                            <Form.Label htmlFor="inputBlurb" className="description">Blurb</Form.Label>
                             <Form.Control 
                                 type="blurb"
                                 name="blurb"
                                 value={blurb}
-                                className="mb-3"
+                                className="mb-2"
                                 id="inputBlurb"
                                 onChange={handleChange}/>
                         </Form.Group>
                         
                         <Form.Label id="error-label" hidden>Error</Form.Label><br/>
                         <Button variant="primary" type="submit" 
-                        className="mb-3"
+                        className="mb-5"
                         onClick={handleSubmit}
                         >Update</Button>
                         <br/>
                         <Form.Group>
-                            <Form.Label htmlFor="pw_input">Set new password</Form.Label>
+                            <Form.Label htmlFor="pw_input" className="description">Set new password</Form.Label>
                             <Form.Control 
                                 className="mb-3"
                                 ref={password_reference}

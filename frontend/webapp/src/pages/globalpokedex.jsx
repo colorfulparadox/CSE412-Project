@@ -3,6 +3,7 @@ import PokemonCard from '../components/pokemon_card';
 import { Button, Col, Container, Form, Row} from 'react-bootstrap';
 import { useEffect, useState, useRef } from 'react';
 import { pokeapi } from '../api/pokemonapi';
+import '../styles/landingpage.css'; 
 
 export default function GlobalPokedex() {
     const [pokemonList, setPokemonList] = useState([]);
@@ -69,11 +70,11 @@ export default function GlobalPokedex() {
         <>
         <NavBar/>
         <Container>
-            <h1>All Pokémon (Global Pokédex)</h1>
-            <p>View the global Pokédex and search for Pokémon.</p>
+            <h1 className="page-title">All Pokémon (Global Pokédex)</h1>
+            <p className="description">View the global Pokédex and search for Pokémon.</p>
             <Form>
                 <Form.Group>
-                    <Form.Control type="text" name="searchinput" id="searchinput" value={searchInput} onChange={handleChange} placeholder='Enter a Pokémon name or Pokédex ID'></Form.Control>
+                    <Form.Control type="text" name="searchinput" id="searchinput" value={searchInput} onChange={handleChange} placeholder='Enter a Pokémon name or Pokédex ID' className="mb-4"></Form.Control>
                     <Button type="submit" 
                         className="mb-3"
                         onClick={handleSubmit}
