@@ -8,8 +8,7 @@ CREATE TABLE trainer (
     username VARCHAR(32) NOT NULL UNIQUE,
     name VARCHAR(32) NOT NULL,
     blurb TEXT,
-    password BYTEA NOT NULL,
-    auth_token TEXT
+    password BYTEA NOT NULL
 );
 
 CREATE TABLE auth_tokens (
