@@ -9,7 +9,7 @@ import os
 from user import *
 
 app = Flask(__name__, static_folder="../../frontend/webapp/dist", static_url_path=None)
-CORS(app, origins="http://localhost:5173", supports_credentials=True)
+CORS(app, origins="http://localhost:5001", supports_credentials=True)
 
 
 db_pool = psycopg2.pool.ThreadedConnectionPool(
@@ -56,18 +56,23 @@ def root(path):
     auth_token = request.cookies.get("auth_token")
     auth_check_response = verify_auth_token_redirect(db_pool, auth_token)
 
+    print(request.path)
+    print(auth_token)
+
+
     if auth_check_response:
-        if request.path != "/login" and request.path != "/":
-            return auth_check_response, 401
-    else:
-        if request.path == "/login":
+        if request.path != "/" and request.path != "/login" and request.path != "/globalpokedex" and request.path != "/statcompare":
+            return auth_check_response, 301
+    elif auth_check_response is None and request.path == "/login":
             return redirect("/")
+
 
     return send_from_directory(app.static_folder, "index.html")
 
 
 @app.route("/login", methods=["POST"])
 def login():
+    print("HELLO TIME TO LOG IN USER")
     username = request.form.get("username")
     password = request.form.get("password")
     #print(request.form)

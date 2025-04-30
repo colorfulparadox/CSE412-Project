@@ -13,19 +13,6 @@ conn = psycopg2.connect(
 try:
     cur = conn.cursor()
     
-    '''
-    username = "admin"
-    password = "password".encode('utf-8')
-    hash_password = bcrypt.hashpw(password, bcrypt.gensalt(16))
-    email = "heewook.lee@asu.edu"
-
-    cur.execute("""
-        INSERT INTO UserData (username, password, email)
-        VALUES (%s, %s, %s)
-        ON CONFLICT (username) DO NOTHING;
-    """, (username, hash_password, email))
-    '''
-    
     with open("data/pokemon.csv") as file:
         reader = csv.reader(file, delimiter=",")
         next(reader, None)

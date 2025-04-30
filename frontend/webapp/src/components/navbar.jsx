@@ -13,10 +13,12 @@ async function handleLogout() {
     await fetch("/logout", {
       method: "POST",
       credentials: "include",
-    });
-    window.location.href = "/login";
+    })
   } catch (error) {
     console.error("Logout failed:", error);
+  }
+  finally {
+    location.reload();
   }
 }
 
@@ -47,10 +49,6 @@ export default function NavBar() {
   const location = useLocation();
 
 //   const [user, setAdminData] = useState(null);
-
-    const onSubmit = (event) => {
-      handleLogout();
-    }
 
     return (
       <Navbar className="custom-navbar" expand="lg">
