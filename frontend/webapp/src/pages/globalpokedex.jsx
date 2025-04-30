@@ -56,7 +56,9 @@ export default function GlobalPokedex() {
     const handleSubmit = (event) => {
         event.preventDefault();
 
+        // load entire pokedex if empty search;
         if (searchInput == '' || searchInput == ' ') {
+            load_pokedex()
             return;
         }
 
