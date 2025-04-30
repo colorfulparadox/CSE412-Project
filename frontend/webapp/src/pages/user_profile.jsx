@@ -12,7 +12,8 @@ export default function Profile() {
     const [name, setName] = useState("");
     const [blurb, setBlurb] = useState("");
     const password_reference = useRef("");
-  
+    const [errorMessage, setErrorMessage] = useState("");
+
     async function load_profile() {
         try {
             const data = await pokeapi(`/profile`);
@@ -44,8 +45,9 @@ export default function Profile() {
             "blurb": blurb,
         };
 
-        pokepostrequest("/profile/set", updatedata);
-
+        pokepostrequest("/profile/set", updatedata).then(result => {
+            setErrorMessage(result.message);
+        });
     }
 
     const pwupdate_submit = (event) => {
@@ -58,8 +60,9 @@ export default function Profile() {
             return;
         }
 
-        pokepostrequest("/profile/setpw", {"password": pw});
-
+        pokepostrequest("/profile/setpw", {"password": pw}).then(result => {
+            setErrorMessage(result.message);
+        })
     }
 
     const handleChange = (event) => {
@@ -86,6 +89,7 @@ export default function Profile() {
                 <Row>
                     <Col style={{ padding: '20px' }}>
                         <h1 className="page-title">Trainer Profile</h1>
+                        {errorMessage && <h3 style={{ color: "red" }}>{errorMessage}</h3>}
                         <Form.Group>
                             <Form.Label htmlFor="inputUsername" className="description">Username</Form.Label>
                             <Form.Control 

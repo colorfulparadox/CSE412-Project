@@ -77,7 +77,8 @@ export default function Login() {
       console.log(result);
 
       if (response.ok) {
-        window.location.href = "/"
+        setSignup(false)
+        setErrorMessage("Signup successful, Please login!")
       } else {
         setErrorMessage(result.message)
       }

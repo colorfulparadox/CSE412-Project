@@ -74,7 +74,7 @@ def root(path):
         if request.path != "/" and request.path != "/login" and request.path != "/globalpokedex" and request.path != "/statcompare":
             return auth_check_response, 301
     elif auth_check_response is None and request.path == "/login":
-            return redirect("/")
+        return redirect("/")
 
 
     index_file = os.path.join(app.static_folder, "index.html")
@@ -109,7 +109,7 @@ def signup():
     name = request.form.get("name")
     username = request.form.get("username")
     password = request.form.get("password")
-    print(request.form)
+    #print(request.form)
 
     result, message = create_new_user(db_pool, name, username, password)
 
@@ -118,9 +118,6 @@ def signup():
         return response, 200
     else:
         return jsonify({"message": f"{message}", "status": "error"}), 401
-
-
-    return jsonify({"message": "Invalid username or password", "status": "error"}), 401
 
 @app.route("/pokemon/<pokedexid>", methods=["GET"])
 def get_pokemon(pokedexid):
@@ -273,13 +270,59 @@ def set_profile_data():
         WHERE uid IN (SELECT uid FROM auth_tokens where auth_key = %s);
     """, (username, name, blurb, authid, ))
     
-    return make_response(jsonify("good"))
+    return make_response({"message": f"Updated Profile", "status": "success"}), 200
 
 @app.route('/profile/setpw', methods=["POST"])
 def set_profile_password():
     authid = request.cookies.get('auth_token')
+    json = request.get_json()
+    
+    conn = db_pool.getconn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                SELECT uid
+                FROM auth_tokens 
+                WHERE auth_key = %s;
+            """, (authid,))
+            result = cur.fetchone()
 
-    print(request.get_json())
+            if result is None:
+                return jsonify({"message": f"Invalid Login Token", "status": "error"}), 401
+            
+            uid = result[0]
+            hashed = hash_password(json['password'])
+
+            cur.execute("""
+                UPDATE trainer
+                SET password = %s
+                WHERE uid = %s;
+            """, (hashed, uid,))
+            conn.commit()
+            return jsonify({"message": f"Password updated!", "status": "success"}), 200
+    except Exception as e:
+        print("DB Error:", e)
+        conn.rollback()
+        return jsonify({"message": f"{e}", "status": "succuess"}), 401
+    finally:
+        db_pool.putconn(conn)
+    return jsonify({"message": f"SERVER ERROR", "status": "error"}), 401
+
+def logout_user(db_pool, key: str):
+    conn = db_pool.getconn()
+    try:
+        with conn.cursor() as cur:
+            cur.execute("""
+                    DELETE FROM auth_tokens WHERE auth_key = %s;
+                """, (key,))
+            conn.commit()
+    except Exception as e:
+        print("DB Error:", e)
+        conn.rollback()
+    finally:
+        db_pool.putconn(conn)
+
+
     return make_response(jsonify("good"))
 
 @app.route("/logout", methods=["POST"])

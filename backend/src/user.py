@@ -129,7 +129,6 @@ def create_new_user(db_pool, name: str, username: str, password: str) -> tuple[S
                 result = cur.fetchall()
 
                 if result != []:
-                    print("WHAT THE FUCK")
                     return SignUpResult.ERROR, "Username already taken"
 
                 hashed_password = hash_password(password)
@@ -140,7 +139,7 @@ def create_new_user(db_pool, name: str, username: str, password: str) -> tuple[S
                 """, (username, name, hashed_password))
                 conn.commit()
 
-                return SignUpResult, ""
+                return SignUpResult.SUCCESS, ""
                 
     except Exception as e:
         print("DB Error:", e)
