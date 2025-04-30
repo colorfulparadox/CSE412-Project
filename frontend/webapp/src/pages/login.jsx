@@ -2,14 +2,15 @@ import React, { useState } from "react";
 import { Container } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
-import NavBar from '../components/navbar'; 
+import NavBar from '../components/navbar';
 import '../styles/login_signup.css';
+import '../styles/landingpage.css'; 
 
 const LoginMenu = ({ loginClick, signupClick }) => {
   return (
     <Container className="mb-4">
-      <Button className="auth-button me-2" onClick={loginClick}>Login</Button>
-      <Button className="auth-button" onClick={signupClick}>Sign Up</Button>
+      <Button className="btn-auth me-4" onClick={loginClick}>LOGIN</Button>
+      <Button className="btn-signup" onClick={signupClick}>SIGN UP</Button>
     </Container>
   );
 }
@@ -102,67 +103,76 @@ export default function Login() {
       {!signup ? (
         <div className="login-page">
           <Container>
-            <LoginMenu loginClick={loginClick} signupClick={signupClick} />
-            <h3>Login</h3>
-            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <Form onSubmit={handleLogin}>
-              <Form.Group className="mb-5">
-                <Form.Label>Username:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="username"
-                  id="usernameForm"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <Form.Label>Password:</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="password"
-                  id="passwordForm"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <Button className="auth-button mt-3" type="submit">Login</Button>{' '}
-              </Form.Group>
-            </Form>
+            <div className="content">
+              <LoginMenu loginClick={loginClick} signupClick={signupClick} />
+              <img src="/ui_assets/pokeball.png" alt="Pokeball" className="pokeball" />
+              <h3 className="page-title">Welcome Back!</h3>
+              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+              <Form onSubmit={handleLogin}>
+                <Form.Group className="mb-5">
+                  <Form.Label>Username:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="username"
+                    id="usernameForm"
+                    className="mb-3"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="password"
+                    id="passwordForm"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <Button className="btn-password mt-4" type="submit">ENTER</Button>{' '}
+                </Form.Group>
+              </Form>
+            </div>
           </Container>
         </div>
       ) : (
         <div className="signup-page">
           <Container>
-            <LoginMenu loginClick={loginClick} signupClick={signupClick} />
-            <h3>Sign Up</h3>
-            {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
-            <Form onSubmit={handleSignup}>
-              <Form.Group className="mb-5">
-                <Form.Label>Name:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="name"
-                  id="nameForm"
-                  value={name}
-                  onChange={(e) => setName(e.target.value)}
-                />
-                <Form.Label>Username:</Form.Label>
-                <Form.Control
-                  type="text"
-                  placeholder="username"
-                  id="usernameForm"
-                  value={username}
-                  onChange={(e) => setUsername(e.target.value)}
-                />
-                <Form.Label>Password:</Form.Label>
-                <Form.Control
-                  type="password"
-                  placeholder="password"
-                  id="passwordForm"
-                  value={password}
-                  onChange={(e) => setPassword(e.target.value)}
-                />
-                <Button className="auth-button mt-3" type="submit">Sign Up</Button>{' '}
-              </Form.Group>
-            </Form>
+            <div className="content">
+              <LoginMenu loginClick={loginClick} signupClick={signupClick} />
+              <img src="/ui_assets/pokeball.png" alt="Pokeball" className="pokeball" />
+              <h3 className="page-title">Start Your Journey!</h3>
+              {errorMessage && <p style={{ color: "red" }}>{errorMessage}</p>}
+              <Form onSubmit={handleSignup}>
+                <Form.Group className="mb-5">
+                  <Form.Label>Name:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="name"
+                    id="nameForm"
+                    className="mb-3"
+                    value={name}
+                    onChange={(e) => setName(e.target.value)}
+                  />
+                  <Form.Label>Username:</Form.Label>
+                  <Form.Control
+                    type="text"
+                    placeholder="username"
+                    id="usernameForm"
+                    className="mb-3"
+                    value={username}
+                    onChange={(e) => setUsername(e.target.value)}
+                  />
+                  <Form.Label>Password:</Form.Label>
+                  <Form.Control
+                    type="password"
+                    placeholder="password"
+                    id="passwordForm"
+                    value={password}
+                    onChange={(e) => setPassword(e.target.value)}
+                  />
+                  <Button className="btn-password mt-4" type="submit">GET STARTED</Button>{' '}
+                </Form.Group>
+              </Form>
+            </div>
           </Container>
         </div>
       )}

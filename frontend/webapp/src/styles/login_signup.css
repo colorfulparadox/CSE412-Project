@@ -34,16 +34,4 @@
     font-family: 'Chivo Mono', monospace;
 }
 
-.auth-button {
-    font-family: 'Montserrat', sans-serif;
-    font-weight: 700;
-    border: 2px solid #4f6d7a;
-    color: #4f6d7a;
-    background-color: transparent;
-    transition: all 0.3s ease;
-}
 
-.auth-button:hover {
-    background-color: #f3c505;
-    color: #0e2454;
-}

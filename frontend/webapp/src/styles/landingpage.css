@@ -133,6 +133,12 @@ h1 {
     color: white !important;
     border: none !important;
     font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    text-shadow:
+    -0.75px -0.75px 0 #000,
+     0.75px -0.75px 0 #000,
+    -0.75px  0.75px 0 #000,
+     0.75px  0.75px 0 #000;
   }
   .btn-search:hover {
     background-color: #1c7ed6 !important;
@@ -143,6 +149,12 @@ h1 {
     color: white !important;
     border: none !important;
     font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    text-shadow:
+    -0.75px -0.75px 0 #000,
+     0.75px -0.75px 0 #000,
+    -0.75px  0.75px 0 #000,
+     0.75px  0.75px 0 #000;
   }
   .btn-add:hover {
     background-color: #27ae60 !important;
@@ -153,6 +165,12 @@ h1 {
     color: white !important;
     border: none !important;
     font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    text-shadow:
+    -0.75px -0.75px 0 #000,
+     0.75px -0.75px 0 #000,
+    -0.75px  0.75px 0 #000,
+     0.75px  0.75px 0 #000;
   }
   .btn-remove:hover {
     background-color: #c0392b !important;
@@ -163,6 +181,12 @@ h1 {
     color: white !important;
     border: none !important;
     font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    text-shadow:
+    -0.75px -0.75px 0 #000,
+     0.75px -0.75px 0 #000,
+    -0.75px  0.75px 0 #000,
+     0.75px  0.75px 0 #000;
   }
   .btn-update:hover {
     background-color: #1c7ed6 !important;
@@ -173,8 +197,41 @@ h1 {
     color: black !important;
     border: none !important;
     font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
   }
   .btn-password:hover {
     background-color: #d4ac0d !important;
   }
   
+  /* Login/Signup Button Styles */
+  .btn-auth {
+    background-color: #1e90ff !important;
+    color: white !important;
+    border: none !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    text-shadow:
+    -0.75px -0.75px 0 #000,
+     0.75px -0.75px 0 #000,
+    -0.75px  0.75px 0 #000,
+     0.75px  0.75px 0 #000;
+  }
+  .btn-auth:hover {
+    background-color: #1c7ed6 !important;
+  }
+
+  .btn-signup {
+    background-color: #2ecc71 !important;
+    color: white !important;
+    border: none !important;
+    font-weight: bold !important;
+    font-family: 'Montserrat', sans-serif !important;
+    text-shadow:
+    -0.75px -0.75px 0 #000,
+     0.75px -0.75px 0 #000,
+    -0.75px  0.75px 0 #000,
+     0.75px  0.75px 0 #000;
+  }
+  .btn-signup:hover {
+    background-color: #27ae60 !important;
+  }
