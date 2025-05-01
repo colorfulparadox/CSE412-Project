@@ -66,8 +66,8 @@ def root(path):
     auth_token = request.cookies.get("auth_token")
     auth_check_response = verify_auth_token_redirect(db_pool, auth_token)
 
-    print(request.path)
-    print(auth_token)
+    #print(request.path)
+    #print(auth_token)
 
 
     if auth_check_response:
@@ -87,7 +87,6 @@ def root(path):
 
 @app.route("/login", methods=["POST"])
 def login():
-    print("HELLO TIME TO LOG IN USER")
     username = request.form.get("username")
     password = request.form.get("password")
     #print(request.form)
